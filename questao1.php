@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if (isset($_GET["novo"]) && $_GET["novo"] === "1") {
+    $_SESSION["foco"] = "Questionário completo";
+}
+
 // O questionário só começa depois do diagnóstico de dificuldade.
 if (!isset($_SESSION["foco"])) {
     header("Location: formulario.php");

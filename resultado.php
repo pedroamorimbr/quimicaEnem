@@ -197,7 +197,7 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 
             <!-- Ações -->
             <div class="acoes resultado-acoes">
-                <a class="botao" href="questao1.php">
+                <a class="botao" href="questao1.php?novo=1">
                     Fazer novo simulado
                 </a>
                 <a class="botao secundario" href="central_conhecimento.php">
