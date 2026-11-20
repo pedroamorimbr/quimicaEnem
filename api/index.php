@@ -6,7 +6,13 @@ $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $requestPath = urldecode($requestPath);
 $requestPath = ltrim($requestPath, '/');
 
-if ($requestPath === '' || str_ends_with($requestPath, '/')) {
+if ($requestPath === '') {
+    // A entrada do domínio começa pelo diagnóstico; links internos para index.php não mudam.
+    header('Location: /formulario.php', true, 302);
+    exit;
+}
+
+if (str_ends_with($requestPath, '/')) {
     $requestedFile = 'index.php';
 } else {
     $requestedFile = pathinfo($requestPath, PATHINFO_EXTENSION) === ''
