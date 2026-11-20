@@ -85,7 +85,7 @@ Descrição: Questão 7 do simulado — contém enunciado, alternativas, process
             </div>
 
            <div class="imagem-estudo">
-         <img src="assets/images/ester.svg" alt="Éster">
+         <img src="assets/images/chemistry/ester.svg" alt="Éster">
         </div>
 
             <div class="questao-numero">Questao 7</div>

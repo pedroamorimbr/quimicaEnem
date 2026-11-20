@@ -87,7 +87,7 @@ Contém: lógica de validação e navegação para `questao3.php`.
 
             <!-- Imagem de apoio visual. -->
            <div class="imagem-estudo">
-        <img src="assets/images/alcool.svg" alt="Álcool">
+        <img src="assets/images/chemistry/alcool.svg" alt="Álcool">
         </div>
 
             <div class="questao-numero">Questao 2</div>

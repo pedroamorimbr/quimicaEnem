@@ -89,7 +89,7 @@ Descrição: Última questão do simulado; ao finalizar redireciona para `result
             </div>
 
             <div class="imagem-estudo">
-             <img src="assets/images/oxigenadas_padrao.svg" alt="Funções Oxigenadas">
+             <img src="assets/images/chemistry/oxigenadas_padrao.svg" alt="Funções Oxigenadas">
             </div>
 
             <div class="questao-numero">Questao 10</div>

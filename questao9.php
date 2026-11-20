@@ -85,7 +85,7 @@ Descrição: Questão 9 do simulado. Contém lógica para verificar respostas e 
             </div>
 
             <div class="imagem-estudo">
-            <img src="assets/images/amida.svg" alt="Amida">
+            <img src="assets/images/chemistry/amida.svg" alt="Amida">
             </div>
 
             <div class="questao-numero">Questao 9</div>

@@ -84,7 +84,7 @@ Descrição: Questão 4 do simulado. Contém validação de alternativa e contro
 
             <!-- Imagem de apoio visual. -->
             <div class="imagem-estudo">
-            <img src="assets/images/acido-carboxilico.svg" alt="Ácido Carboxílico">
+            <img src="assets/images/chemistry/acido-carboxilico.svg" alt="Ácido Carboxílico">
             </div>
 
             <div class="questao-numero">Questao 4</div>

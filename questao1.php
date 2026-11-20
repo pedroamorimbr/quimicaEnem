@@ -107,7 +107,7 @@ Contém: manipulação de pontuação, feedback e redirecionamento para `questao
 
             <!-- Imagem de apoio visual. -->
             <div class="imagem-estudo">
-    <img src="assets/images/hidrocarboneto.svg" alt="Hidrocarboneto">
+    <img src="assets/images/chemistry/hidrocarboneto.svg" alt="Hidrocarboneto">
 </div>
 
             <div class="questao-numero">Questao 1</div>

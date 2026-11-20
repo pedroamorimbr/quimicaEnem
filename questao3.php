@@ -86,7 +86,7 @@ Descrição: Questão 3 do simulado. Exibe enunciado, aceita resposta via POST e
 
             <!-- Imagem de apoio visual. -->
             <div class="imagem-estudo">
-             <img src="assets/images/aldeido.svg" alt="Aldeído">
+             <img src="assets/images/chemistry/aldeido.svg" alt="Aldeído">
             </div>
 
             <div class="questao-numero">Questao 3</div>

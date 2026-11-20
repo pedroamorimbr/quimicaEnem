@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="assets/images/logo/Logo%20neon%20de%20qu%C3%ADmica%20PLAY%20CHEMISTRY%20(1).png" alt="Logo do PlayCHEMISTRY ENEM" width="220">
+<img src="assets/images/brand/logo-playchemistry.png" alt="Logo do PlayCHEMISTRY ENEM" width="220">
 
 ### Aprenda, pratique e evolua em Química para o ENEM
 
@@ -48,7 +48,7 @@ Ela pode explicar conceitos, orientar cálculos, apresentar etapas e ajudar no e
 
 <div align="center">
 
-<img src="assets/images/leonardia-avatar.jpg" alt="Avatar da LeonardIA" width="160">
+<img src="assets/images/assistants/leonardia-avatar.jpg" alt="Avatar da LeonardIA" width="160">
 
 </div>
 
@@ -70,27 +70,23 @@ PHP         Regras de página e validação
 ```text
 quimicaEnem/
 ├── assets/
-│   ├── css/              Estilos e responsividade
-│   ├── images/           Logos, avatares e ilustrações
-│   └── js/               Interações e dados de interface
-├── cadastro.php          Cadastro de estudantes
-├── login.php             Autenticação de estudantes
-├── index.php             Página inicial
-├── central_conhecimento.php
-├── formulario.php        Diagnóstico do estudante
-├── laboratorio_3d.php
-├── leonardia.php         Chat e integração da IA
-├── periodiclab.php       Tabela periodica interativa
-├── questao1.php
-├── ...
-├── questao10.php
-├── resultado.php
+│   ├── css/               Estilos e responsividade
+│   ├── images/
+│   │   ├── assistants/    Avatar da LeonardIA
+│   │   ├── brand/         Identidade visual do site
+│   │   ├── chemistry/     Ilustrações e estruturas químicas
+│   │   └── team/          Fotos da equipe e dos professores
+│   └── js/                Interações e dados de interface
+├── api/
+│   └── index.php          Despachante das rotas PHP na Vercel
 ├── database/
 │   └── schema.sql         Estrutura do banco MySQL
 ├── includes/
-│   └── bootstrap.php      Conexão PDO e sessão persistente
+│   └── bootstrap.php      Conexão PDO, sessões e funções compartilhadas
+├── *.php                 Páginas públicas mantidas na raiz para preservar URLs
+├── .env.example          Nomes das variáveis de ambiente de exemplo
 ├── vercel.json           Configuração de deploy
-└── README.MD
+└── README.md
 ```
 
 ---

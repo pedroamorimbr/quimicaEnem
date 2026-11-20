@@ -85,7 +85,7 @@ Descrição: Questão 8 do simulado. Exibe alternativas e validação; atualiza 
             </div>
 
             <div class="imagem-estudo">
-            <img src="assets/images/eter.svg" alt="Éter">
+            <img src="assets/images/chemistry/eter.svg" alt="Éter">
             </div>
             <div class="questao-numero">Questao 8</div>
             <p class="enunciado">Qual funcao organica apresenta um atomo de oxigenio ligado a duas cadeias carbonicas?</p>

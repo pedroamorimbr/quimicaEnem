@@ -12,7 +12,7 @@
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="index.php" aria-label="Voltar para a página inicial">
-                <img class="logo-site" src="assets/images/logo/Logo neon de química PLAY CHEMISTRY (1).png" alt="Logo Play Chemistry">
+                <img class="logo-site" src="assets/images/brand/logo-playchemistry.png" alt="Logo Play Chemistry">
                 <div class="brand-copy">
                     <span>PlayCHEMISTRY</span>
                     <small>ENEM</small>
@@ -52,7 +52,7 @@
         <section class="equipe-grade" aria-label="Desenvolvedores do projeto">
             <article class="cartao-desenvolvedor">
                 <div class="foto-desenvolvedor">
-                    <img src="assets/images/AMORIM.jpeg" alt="Foto de Pedro Amorim da Silva Filho" loading="lazy">
+                    <img src="assets/images/team/pedro-amorim.jpeg" alt="Foto de Pedro Amorim da Silva Filho" loading="lazy">
                 </div>
                 <div class="dados-desenvolvedor">
                     <span class="desenvolvedor-numero">01 / EQUIPE</span>
@@ -66,7 +66,7 @@
 
             <article class="cartao-desenvolvedor">
                 <div class="foto-desenvolvedor">
-                    <img src="assets/images/hR.jpeg" alt="Foto de Henrique Rafael Costa de Lucena Filho" loading="lazy">
+                    <img src="assets/images/team/henrique-rafael.jpeg" alt="Foto de Henrique Rafael Costa de Lucena Filho" loading="lazy">
                 </div>
                 <div class="dados-desenvolvedor">
                     <span class="desenvolvedor-numero">02 / EQUIPE</span>
@@ -80,7 +80,7 @@
 
             <article class="cartao-desenvolvedor">
                 <div class="foto-desenvolvedor">
-                    <img src="assets/images/KM.jpeg" alt="Foto de Kaike Cesar de Medeiros" loading="lazy">
+                    <img src="assets/images/team/kaike-medeiros.jpeg" alt="Foto de Kaike Cesar de Medeiros" loading="lazy">
                 </div>
                 <div class="dados-desenvolvedor">
                     <span class="desenvolvedor-numero">03 / EQUIPE</span>
@@ -102,7 +102,7 @@
         <section class="equipe-grade professores-grade" aria-label="Professores do projeto">
             <article class="cartao-professor">
                 <div class="foto-professor">
-                    <img src="assets/images/felipe-ramos.png?v=2" alt="Felipe Ramos, professor de WEB II" loading="lazy">
+                    <img src="assets/images/team/felipe-ramos.png?v=2" alt="Felipe Ramos, professor de WEB II" loading="lazy">
                 </div>
                 <div class="dados-desenvolvedor">
                     <span class="desenvolvedor-numero">WEB II</span>
@@ -114,7 +114,7 @@
 
             <article class="cartao-professor">
                 <div class="foto-professor">
-                    <img src="assets/images/leonardo-lucio.png?v=2" alt="Leonardo Lucio, professor de Química" loading="lazy">
+                    <img src="assets/images/team/leonardo-lucio.png?v=2" alt="Leonardo Lucio, professor de Química" loading="lazy">
                 </div>
                 <div class="dados-desenvolvedor">
                     <span class="desenvolvedor-numero">QUÍMICA</span>

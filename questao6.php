@@ -88,7 +88,7 @@ Descrição: Questão 6 do simulado. Alternativas, validação e encaminhamento 
 
             <!-- Imagem de apoio visual. -->
            <div class="imagem-estudo">
-         <img src="assets/images/cetona.svg" alt="Cetona">
+         <img src="assets/images/chemistry/cetona.svg" alt="Cetona">
         </div>
             <div class="questao-numero">Questao 6</div>
             <p class="enunciado">Qual funcao organica possui o grupo carbonila entre duas cadeias carbonicas?</p>

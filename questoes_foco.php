@@ -158,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     <?php
                                         $imagemQuestao = $questao["imagem"];
                                         if (strpos($imagemQuestao, "assets/") !== 0) {
-                                            $imagemQuestao = "assets/images/" . $imagemQuestao;
+                                            $imagemQuestao = "assets/images/chemistry/" . $imagemQuestao;
                                         }
                                     ?>
                                     <!-- Cada fieldset representa uma questão independente. -->

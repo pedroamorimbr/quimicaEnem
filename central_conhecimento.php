@@ -13,7 +13,7 @@
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="index.php" aria-label="Voltar para a página inicial">
-                <img class="logo-site" src="assets/images/logo/Logo neon de química PLAY CHEMISTRY (1).png" alt="Logo Play Chemistry">
+                <img class="logo-site" src="assets/images/brand/logo-playchemistry.png" alt="Logo Play Chemistry">
                 <div class="brand-copy"><span>PlayCHEMISTRY</span><small>ENEM</small></div>
             </a>
             <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="main-nav" aria-expanded="false">☰</button>

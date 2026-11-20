@@ -370,7 +370,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="index.php" aria-label="Voltar para a página inicial">
-                <img class="logo-site" src="assets/images/logo/Logo neon de química PLAY CHEMISTRY (1).png" alt="Logo Play Chemistry">
+                <img class="logo-site" src="assets/images/brand/logo-playchemistry.png" alt="Logo Play Chemistry">
                 <div class="brand-copy">
                     <span>PlayCHEMISTRY</span>
                     <small>ENEM</small>
@@ -424,7 +424,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                     <div class="wa-header-user">
-                        <img class="wa-avatar" src="assets/images/leonardia-avatar.jpg" alt="Avatar do LeonardIA">
+                        <img class="wa-avatar" src="assets/images/assistants/leonardia-avatar.jpg" alt="Avatar do LeonardIA">
                         <div class="wa-user-meta">
                             <strong>LeonardIA</strong>
                             <span class="wa-user-role">Professor de Química <span aria-hidden="true">|</span> ENEM</span>

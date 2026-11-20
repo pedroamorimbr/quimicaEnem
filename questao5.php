@@ -88,7 +88,7 @@ Descrição: Questão 5 do simulado. Processa o formulário e atualiza a pontua�
             </div>
 
             <div class="imagem-estudo">
-             <img src="assets/images/amina.svg" alt="Amina">
+             <img src="assets/images/chemistry/amina.svg" alt="Amina">
             </div>
 
             <div class="questao-numero">Questao 5</div>
