@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// O questionário só começa depois do diagnóstico de dificuldade.
+if (!isset($_SESSION["foco"])) {
+    header("Location: formulario.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <!--
 Arquivo: questao1.php
@@ -32,15 +41,6 @@ Contém: manipulação de pontuação, feedback e redirecionamento para `questao
 
     
     <main class="pagina">
-        <?php
-        session_start();
-
-        // O questionário só começa depois do diagnóstico de dificuldade.
-        if (!isset($_SESSION["foco"])) {
-            header("Location: formulario.php");
-            exit;
-        }
-        ?>
         <?php
         // Dados e processamento da questao 1.
         const TOTAL_QUESTOES = 10;
