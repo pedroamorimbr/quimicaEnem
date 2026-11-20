@@ -1,12 +1,17 @@
 <?php
-// Página do formulário de diagnóstico sobre Funções Orgânicas.
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+$usuario = app_database_configured() ? app_current_user() : null;
+if (app_database_configured() && !$usuario) {
+    header('Location: login.php?next=formulario.php');
+    exit;
 }
 
+// Página do formulário de diagnóstico sobre Funções Orgânicas.
 $dados = [
-    "nome" => "",
-    "email" => "",
+    "nome" => $usuario['name'],
+    "email" => $usuario['email'],
     "idade" => "",
     "serie" => "",
     "dificuldade" => "",
@@ -78,6 +83,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erros["dificuldade"] = "Selecione uma dificuldade válida.";
     }
 
+    if (empty($erros) && app_database_configured()) {
+        try {
+            $profileUpdate = app_db()->prepare(
+                'INSERT INTO student_profiles (user_id, age, grade, study_goal, weekly_study_hours)
+                 VALUES (:user_id, :age, :grade, :study_goal, :hours)
+                 ON DUPLICATE KEY UPDATE age = VALUES(age), grade = VALUES(grade),
+                     study_goal = VALUES(study_goal), weekly_study_hours = VALUES(weekly_study_hours)'
+            );
+            $profileUpdate->execute([
+                'user_id' => (int) $_SESSION['user_id'],
+                'age' => (int) $idade,
+                'grade' => $dados['serie'],
+                'study_goal' => $dados['dificuldade'],
+                'hours' => (float) $horas,
+            ]);
+        } catch (PDOException $exception) {
+            error_log('Falha ao salvar perfil de estudante: ' . $exception->getMessage());
+            http_response_code(503);
+            $erros['_global'] = 'Não foi possível salvar seu diagnóstico. Tente novamente mais tarde.';
+        } catch (RuntimeException $exception) {
+            http_response_code(503);
+            $erros['_global'] = $exception->getMessage();
+        }
+    }
+
     if (empty($erros)) {
         $_SESSION["diagnostico"] = [
             "nome" => htmlspecialchars($dados["nome"], ENT_QUOTES, "UTF-8"),
@@ -126,7 +156,9 @@ function erro(string $campo, array $erros): string
             <p>Preencha os dados abaixo para receber uma recomendação de estudo personalizada.</p>
 
             <?php if (!empty($erros)) { ?>
-                <div class="feedback incorreto">Corrija os campos indicados antes de continuar.</div>
+                <div class="feedback incorreto" role="alert">
+                    <?php echo isset($erros['_global']) ? app_escape($erros['_global']) : 'Corrija os campos indicados antes de continuar.'; ?>
+                </div>
             <?php } ?>
 
             <form method="POST" action="formulario.php" class="formulario">
@@ -185,7 +217,7 @@ function erro(string $campo, array $erros): string
 
                 <div class="acoes">
                     <button class="botao" type="submit">Gerar diagnóstico</button>
-                    <a class="botao secundario" href="index.php">Voltar ao início</a>
+                        <a class="botao secundario" href="index.php">Voltar ao início</a>
                 </div>
             </form>
         </section>

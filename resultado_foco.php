@@ -1,6 +1,11 @@
 <?php
-// Inicia a sessão para recuperar o resultado da trilha personalizada.
-session_start();
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+if (app_database_configured() && empty($_SESSION['user_id'])) {
+    header('Location: login.php?next=resultado_foco.php');
+    exit;
+}
 
 // Evita que a página seja acessada sem concluir uma trilha.
 if (!isset($_SESSION["resultado_foco"])) {

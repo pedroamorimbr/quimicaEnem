@@ -9,6 +9,7 @@
 [![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=222222)](https://developer.mozilla.org/docs/Web/JavaScript)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
 </div>
@@ -33,6 +34,7 @@ O sistema combina teoria organizada, exercícios interativos, diagnóstico de ap
 | 🤖 LeonardIA | Assistente de Inteligência Artificial para dúvidas de Química |
 | ⏱️ Simulado ENEM | Questões com cronômetro, correção e revisão imediata |
 | 📊 Meu Desempenho | Indicadores de acertos, pontuação e progresso |
+| 👤 Conta do estudante | Login, diagnóstico salvo e histórico de simulados |
 | 🌙 Tema escuro | Interface adaptada para leitura em ambientes com pouca luz |
 | 🎯 Trilha personalizada | Conteúdos recomendados de acordo com a dificuldade identificada |
 
@@ -71,6 +73,8 @@ quimicaEnem/
 │   ├── css/              Estilos e responsividade
 │   ├── images/           Logos, avatares e ilustrações
 │   └── js/               Interações e dados de interface
+├── cadastro.php          Cadastro de estudantes
+├── login.php             Autenticação de estudantes
 ├── index.php             Página inicial
 ├── central_conhecimento.php
 ├── formulario.php        Diagnóstico do estudante
@@ -81,6 +85,10 @@ quimicaEnem/
 ├── ...
 ├── questao10.php
 ├── resultado.php
+├── database/
+│   └── schema.sql         Estrutura do banco MySQL
+├── includes/
+│   └── bootstrap.php      Conexão PDO e sessão persistente
 ├── vercel.json           Configuração de deploy
 └── README.MD
 ```
@@ -117,6 +125,25 @@ O projeto inclui [vercel.json](vercel.json) para servir as páginas PHP e os rec
 2. Use a raiz do repositorio como diretorio do projeto.
 3. Selecione o framework apropriado ou mantenha as configurações padrão.
 4. Crie um novo deploy.
+
+### Banco MySQL no Railway
+
+Contas, diagnósticos e histórico de até 20 simulados por estudante são
+armazenados em MySQL. Como o sistema executa na Vercel, o banco precisa ser
+externo; não salve dados no disco temporário das funções serverless.
+
+1. Crie um serviço **MySQL** no Railway.
+2. No cliente SQL do Railway, execute [`database/schema.sql`](database/schema.sql).
+3. Use a URL pública de conexão do Railway (`MYSQL_PUBLIC_URL`) como valor de
+   `DATABASE_URL` em **Vercel > Project > Settings > Environment Variables**.
+   Se usar host e porta separados, confirme que são os endereços públicos do
+   serviço, não os nomes internos `*.railway.internal`.
+4. Selecione Production, Preview e Development e faça um novo deploy.
+5. Abra o site, crie uma conta de estudante e complete o diagnóstico. Os
+   simulados concluídos aparecerão em **Meu Desempenho**.
+
+Não publique os valores reais das variáveis nem os salve no repositório.
+O arquivo `.env.example` contém apenas nomes e valores de exemplo.
 
 Recomendação de provedores:
 

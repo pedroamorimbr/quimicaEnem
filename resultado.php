@@ -1,3 +1,110 @@
+<?php
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+const TOTAL_QUESTOES = 10;
+$usuario = null;
+$historico = [];
+$erroBanco = '';
+$tentativaRealizada = false;
+$pontuacao = 0;
+$erros = 0;
+$tempoRegistrado = 0;
+
+try {
+    if (app_database_configured() && !empty($_SESSION['user_id'])) {
+        $usuario = app_current_user();
+
+        $attemptId = (string) ($_SESSION['quiz_attempt_id'] ?? '');
+        $score = filter_var($_SESSION['quiz_score'] ?? null, FILTER_VALIDATE_INT);
+        $concluido = !empty($_SESSION['quiz_completed']);
+        if ($concluido && preg_match('/^[a-f0-9]{32}$/', $attemptId) && $score !== false && $score >= 0 && $score <= TOTAL_QUESTOES) {
+            $elapsedSeconds = min(86400, max(0, time() - (int) ($_SESSION['quiz_started_at'] ?? time())));
+            $saveAttempt = app_db()->prepare(
+                'INSERT IGNORE INTO quiz_attempts (user_id, attempt_key, score, total_questions, elapsed_seconds)
+                 VALUES (:user_id, :attempt_key, :score, :total_questions, :elapsed_seconds)'
+            );
+            $saveAttempt->execute([
+                'user_id' => (int) $usuario['id'],
+                'attempt_key' => $attemptId,
+                'score' => $score,
+                'total_questions' => TOTAL_QUESTOES,
+                'elapsed_seconds' => $elapsedSeconds,
+            ]);
+            unset(
+                $_SESSION['quiz_attempt_id'],
+                $_SESSION['quiz_started_at'],
+                $_SESSION['quiz_score'],
+                $_SESSION['quiz_answers'],
+                $_SESSION['quiz_completed']
+            );
+        }
+
+        if ($usuario) {
+            $attempts = app_db()->prepare(
+                'SELECT score, total_questions, elapsed_seconds, completed_at
+                 FROM quiz_attempts WHERE user_id = :user_id
+                 ORDER BY completed_at DESC, id DESC LIMIT 20'
+            );
+            $attempts->execute(['user_id' => (int) $usuario['id']]);
+            $historico = $attempts->fetchAll();
+            if ($historico) {
+                $tentativaRealizada = true;
+                $pontuacao = (int) $historico[0]['score'];
+                $erros = (int) $historico[0]['total_questions'] - $pontuacao;
+                $tempoRegistrado = (int) $historico[0]['elapsed_seconds'];
+            }
+        }
+    }
+
+    if (!app_database_configured() && !empty($_SESSION['quiz_completed'])) {
+        $score = filter_var($_SESSION['quiz_score'] ?? null, FILTER_VALIDATE_INT);
+        if ($score !== false && $score >= 0 && $score <= TOTAL_QUESTOES) {
+            $tentativaRealizada = true;
+            $pontuacao = $score;
+            $erros = TOTAL_QUESTOES - $score;
+            $tempoRegistrado = min(86400, max(0, time() - (int) ($_SESSION['quiz_started_at'] ?? time())));
+        }
+    }
+} catch (PDOException $exception) {
+    error_log('Falha ao carregar o desempenho do estudante: ' . $exception->getMessage());
+    http_response_code(503);
+    $erroBanco = 'Não foi possível carregar ou salvar seu desempenho. Tente novamente em alguns instantes.';
+} catch (RuntimeException $exception) {
+    http_response_code(503);
+    $erroBanco = $exception->getMessage();
+}
+
+$porcentagem = $tentativaRealizada ? round(($pontuacao / TOTAL_QUESTOES) * 100) : 0;
+$porcentagemErros = $tentativaRealizada ? round(($erros / TOTAL_QUESTOES) * 100) : 0;
+$classificacao = 'Nenhum simulado concluído';
+$mensagem = 'Conclua um simulado para acompanhar seu desempenho nesta página.';
+$classeNota = 'media';
+$corGrafico = '#f59e0b';
+
+if ($tentativaRealizada) {
+    if ($pontuacao >= 9) {
+        $classificacao = 'Pronto para o ENEM';
+        $mensagem = 'Excelente! Você reconheceu muito bem as funções orgânicas cobradas no questionário.';
+        $classeNota = 'boa';
+        $corGrafico = '#10b981';
+    } elseif ($pontuacao >= 7) {
+        $classificacao = 'Muito bom';
+        $mensagem = 'Você está indo muito bem. Revise os grupos funcionais para alcançar o desempenho máximo.';
+        $classeNota = 'boa';
+        $corGrafico = '#10b981';
+    } elseif ($pontuacao >= 5) {
+        $classificacao = 'Intermediário';
+        $mensagem = 'Você já possui uma boa base, mas ainda precisa revisar algumas funções orgânicas.';
+        $classeNota = 'media';
+    } else {
+        $classificacao = 'Em revisão';
+        $mensagem = 'Retome o conteúdo de funções orgânicas e tente novamente para fixar melhor os conceitos.';
+        $classeNota = 'ruim';
+        $corGrafico = '#ef4444';
+    }
+}
+?>
 <!DOCTYPE html>
 <!--
 Arquivo: resultado.php
@@ -42,77 +149,31 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 
     <main class="pagina">
 
-        <?php
-
-        // Quantidade total de questões
-        const TOTAL_QUESTOES = 10;
-
-        // Só considera o resultado concluído quando a pontuação foi enviada.
-        $tentativaRealizada = isset($_GET["pontos"])
-            && is_scalar($_GET["pontos"])
-            && filter_var($_GET["pontos"], FILTER_VALIDATE_INT) !== false;
-        $pontuacao = $tentativaRealizada
-            ? max(0, min(TOTAL_QUESTOES, (int) $_GET["pontos"]))
-            : 0;
-        $erros = $tentativaRealizada ? TOTAL_QUESTOES - $pontuacao : 0;
-
-        // Calcula o percentual de acertos
-        $porcentagem = round(($pontuacao / TOTAL_QUESTOES) * 100);
-        $porcentagemErros = $tentativaRealizada
-            ? round(($erros / TOTAL_QUESTOES) * 100)
-            : 0;
-
-        $classificacao = "";
-        $mensagem = "";
-        $classeNota = ""; // Armazenará a classe de cor ('ruim', 'media' ou 'boa')
-        $corGrafico = "#10b981";
-
-        if (!$tentativaRealizada) {
-            $classificacao = "Questionário não iniciado";
-            $mensagem = "Responda ao questionário para visualizar seus acertos e erros.";
-            $classeNota = "media";
-            $corGrafico = "#f59e0b";
-        } else switch ($pontuacao) {
-
-            case 10:
-            case 9:
-                $classificacao = "Pronto para o ENEM";
-                $mensagem = "Excelente! Você reconheceu muito bem as funções orgânicas cobradas no questionário.";
-                $classeNota = "boa";
-                $corGrafico = "#10b981";
-                break;
-
-            case 8:
-            case 7:
-                $classificacao = "Muito bom";
-                $mensagem = "Você está indo muito bem. Revise os grupos funcionais para alcançar o desempenho máximo.";
-                $classeNota = "boa";
-                $corGrafico = "#10b981";
-                break;
-
-            case 6:
-            case 5:
-                $classificacao = "Intermediário";
-                $mensagem = "Você já possui uma boa base, mas ainda precisa revisar algumas funções orgânicas.";
-                $classeNota = "media";
-                $corGrafico = "#f59e0b";
-                break;
-
-            default:
-                $classificacao = "Em revisão";
-                $mensagem = "Retome o conteúdo de funções orgânicas e tente novamente para fixar melhor os conceitos.";
-                $classeNota = "ruim";
-                $corGrafico = "#ef4444";
-                break;
-        }
-
-        ?>
-
         <section class="painel resultado <?php echo $classeNota; ?>">
 
             <span class="marca">Funções Orgânicas</span>
 
             <h2><?php echo $classificacao; ?></h2>
+
+            <?php if ($usuario) { ?>
+                <p>Conta: <strong><?php echo app_escape($usuario['name']); ?></strong></p>
+                <form method="POST" action="sair.php" class="acoes">
+                    <input type="hidden" name="_csrf" value="<?php echo app_escape(app_csrf_token()); ?>">
+                    <button class="botao secundario" type="submit">Sair da conta</button>
+                </form>
+            <?php } ?>
+
+            <?php if ($erroBanco !== '') { ?>
+                <div class="feedback incorreto" role="alert"><?php echo app_escape($erroBanco); ?></div>
+            <?php } ?>
+
+            <?php if (!$usuario && app_database_configured()) { ?>
+                <p>Entre na sua conta para salvar e consultar seu histórico de simulados.</p>
+                <div class="acoes">
+                    <a class="botao" href="login.php?next=resultado.php">Entrar</a>
+                    <a class="botao secundario" href="cadastro.php?next=resultado.php">Criar conta</a>
+                </div>
+            <?php } ?>
 
             <?php if ($tentativaRealizada) { ?>
                 <div class="nota <?php echo $classeNota; ?>">
@@ -127,12 +188,16 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
                     questões.
                 </p>
             <?php } else { ?>
-                <p>Você ainda não respondeu ao questionário. Nenhum erro foi contabilizado.</p>
+                <p>Você ainda não concluiu um simulado.</p>
+            <?php } ?>
+
+            <?php if (!app_database_configured()) { ?>
+                <p class="legenda">O histórico entre visitas será ativado quando o banco MySQL for conectado.</p>
             <?php } ?>
 
             <p>
                 Tempo de realização:
-                <strong id="tempoFinal">00:00</strong>
+                <strong id="tempoFinal" data-seconds="<?php echo $tempoRegistrado; ?>">00:00</strong>
             </p>
 
             <p><?php echo $mensagem; ?></p>
@@ -168,6 +233,22 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
                     </div>
                 </div>
             </div>
+            <?php } ?>
+
+            <?php if ($usuario && $historico) { ?>
+                <div class="quadro">
+                    <h3>Histórico de simulados</h3>
+                    <div class="lista-grafico">
+                        <?php foreach ($historico as $tentativa) { ?>
+                            <?php $percentualTentativa = round(((int) $tentativa['score'] / (int) $tentativa['total_questions']) * 100); ?>
+                            <p>
+                                <strong><?php echo $percentualTentativa; ?>%</strong>
+                                — <?php echo (int) $tentativa['score']; ?>/<?php echo (int) $tentativa['total_questions']; ?> acertos
+                                — <?php echo app_escape(date('d/m/Y H:i', strtotime($tentativa['completed_at']))); ?>
+                            </p>
+                        <?php } ?>
+                    </div>
+                </div>
             <?php } ?>
 
             <!-- Imagem de revisão -->
@@ -213,8 +294,8 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
     <!-- Tempo final -->
     <script>
 
-        const segundos =
-            parseInt(localStorage.getItem('tempoSimulado')) || 0;
+        const tempoSalvo = document.getElementById('tempoFinal');
+        const segundos = tempoSalvo ? Number(tempoSalvo.dataset.seconds) || 0 : 0;
 
         const minutos =
             String(Math.floor(segundos / 60))
@@ -227,7 +308,7 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
         const tempoFinal = `${minutos}:${seg}`;
 
         const tempoFinalElement = document.getElementById('tempoFinal');
-        if (tempoFinalElement) {
+        if (tempoFinalElement && <?php echo $tentativaRealizada ? 'true' : 'false'; ?>) {
             tempoFinalElement.textContent = tempoFinal;
         }
 
@@ -247,7 +328,7 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
             });
         }
 
-        // Limpa os dados para a próxima tentativa
+        // Limpa os dados para a próxima tentativa.
         localStorage.removeItem('simuladoIniciado');
         localStorage.removeItem('tempoSimulado');
                     

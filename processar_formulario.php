@@ -1,6 +1,10 @@
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+if (app_database_configured() && empty($_SESSION['user_id'])) {
+    header('Location: login.php?next=processar_formulario.php');
+    exit;
 }
 
 if (!isset($_SESSION["diagnostico"])) {
@@ -35,7 +39,7 @@ $recomendacao = $recomendacoes[$dificuldade] ?? $recomendacoes["Questionário co
 $classificacao = $pontuacao === 3 ? "Plano intensivo" : ($pontuacao === 2 ? "Plano regular" : "Plano inicial");
 $questionarioCompleto = $dificuldade !== "Ainda não sei";
 $focoExercicios = $questionarioCompleto ? "Questionário completo" : "Funções oxigenadas";
-$destinoExercicios = $questionarioCompleto ? "questao1.php" : "questoes_foco.php";
+$destinoExercicios = $questionarioCompleto ? "questao1.php?novo=1" : "questoes_foco.php";
 $_SESSION["foco"] = $focoExercicios;
 ?>
 <!DOCTYPE html>
@@ -78,7 +82,7 @@ $_SESSION["foco"] = $focoExercicios;
                     <?php echo $questionarioCompleto ? "Responder questionário completo" : "Fazer exercícios de " . htmlspecialchars($focoExercicios, ENT_QUOTES, "UTF-8"); ?>
                 </a>
                 <?php if (!$questionarioCompleto) { ?>
-                    <a class="botao botao-completo" href="questao1.php">Responder questionário completo</a>
+                    <a class="botao botao-completo" href="questao1.php?novo=1">Responder questionário completo</a>
                 <?php } ?>
                 <a class="botao secundario" href="index.php">Ir para o início</a>
                 <a class="botao secundario" href="formulario.php?refazer=1">Refazer diagnóstico</a>

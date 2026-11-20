@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+if (app_database_configured() && empty($_SESSION['user_id'])) {
+    header('Location: login.php?next=questao1.php%3Fnovo%3D1');
+    exit;
+}
+if (empty($_SESSION['quiz_attempt_id'])) {
+    header('Location: questao1.php?novo=1');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <!--
 Arquivo: questao10.php
@@ -29,25 +41,27 @@ Descrição: Última questão do simulado; ao finalizar redireciona para `result
 
         // Dados da ultima questao.
         $questao = 10;
-        $pontuacao = 0;
-
-        // Recebe a pontuacao acumulada.
-        if (isset($_GET["pontos"])) {
-            $pontuacao = $_GET["pontos"];
-        }
+        $pontuacao = (int) ($_SESSION['quiz_score'] ?? 0);
 
         // Resposta correta.
         $respostaCorreta = "a";
         $mensagem = "";
         $classe = "";
+        $jaRespondida = array_key_exists($questao, $_SESSION['quiz_answers'] ?? []);
 
         // Corrige o formulario quando enviado.
         if (isset($_POST["validar"])) {
-            $pontuacao = $_POST["pontos"];
-
             if (isset($_POST["resposta"])) {
+                if ($jaRespondida) {
+                    $_POST["resposta"] = $_SESSION['quiz_answers'][$questao];
+                } else {
+                    $_SESSION['quiz_answers'][$questao] = (string) $_POST["resposta"];
+                }
                 if ($_POST["resposta"] == $respostaCorreta) {
-                    $pontuacao = $pontuacao + 1;
+                    if (!$jaRespondida) {
+                        $_SESSION['quiz_score'] = $pontuacao + 1;
+                    }
+                    $pontuacao = (int) ($_SESSION['quiz_score'] ?? 0);
                     $mensagem = "Correto! Alcool, cetona e acido carboxilico sao exemplos de funcoes oxigenadas.";
                     $classe = "correto";
                 } else {
@@ -57,6 +71,10 @@ Descrição: Última questão do simulado; ao finalizar redireciona para `result
             } else {
                 $mensagem = "Selecione uma alternativa antes de validar.";
                 $classe = "alerta";
+            }
+
+            if (isset($_POST["resposta"])) {
+                $_SESSION['quiz_completed'] = true;
             }
         }
         ?>

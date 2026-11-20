@@ -27,6 +27,7 @@
                 <a href="leonardia.php">LeonardIA</a>
                 <a href="resultado.php">Meu Desempenho</a>
                 <a href="sobre.php">Sobre</a>
+                <a href="login.php">Entrar</a>
             </nav>
 
         </div>
@@ -43,7 +44,7 @@
                 </p>
 
                 <div class="cta-row">
-                    <a class="botao" href="questao1.php">Começar a estudar</a>
+                    <a class="botao" href="questao1.php?novo=1">Começar a estudar</a>
                     <a class="botao botao-secundario" href="central_conhecimento.php">Explorar conteúdos</a>
                 </div>
 
@@ -120,7 +121,7 @@
                     <div class="icon-box">⏱️</div>
                     <h3>Simulados ENEM</h3>
                     <p>Questões contextualizadas com cronômetro, correção e revisão imediata.</p>
-                    <a href="questao1.php">Iniciar</a>
+                    <a href="questao1.php?novo=1">Iniciar</a>
                 </article>
 
                 <article class="feature-card">

@@ -1,8 +1,14 @@
 <?php
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+if (app_database_configured() && empty($_SESSION['user_id'])) {
+    header('Location: login.php?next=questoes_foco.php');
+    exit;
+}
+
 // Inicia a sessão para recuperar o conteúdo escolhido no diagnóstico
 // e salvar o resultado da trilha personalizada.
-session_start();
-
 // Impede que o questionário seja aberto sem passar pelo formulário.
 if (!isset($_SESSION["foco"])) {
     header("Location: formulario.php");

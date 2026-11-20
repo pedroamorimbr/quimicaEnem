@@ -1,5 +1,11 @@
 <?php
-session_start();
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+if (app_database_configured() && empty($_SESSION['user_id'])) {
+    header('Location: login.php?next=' . rawurlencode(isset($_GET['novo']) ? 'questao1.php?novo=1' : 'questao1.php'));
+    exit;
+}
 
 if (isset($_GET["novo"]) && $_GET["novo"] === "1") {
     $_SESSION["foco"] = "Questionário completo";
@@ -9,6 +15,14 @@ if (isset($_GET["novo"]) && $_GET["novo"] === "1") {
 if (!isset($_SESSION["foco"])) {
     header("Location: formulario.php");
     exit;
+}
+
+if (isset($_GET['novo']) || empty($_SESSION['quiz_attempt_id'])) {
+    $_SESSION['quiz_attempt_id'] = bin2hex(random_bytes(16));
+    $_SESSION['quiz_started_at'] = time();
+    $_SESSION['quiz_score'] = 0;
+    $_SESSION['quiz_answers'] = [];
+    $_SESSION['quiz_completed'] = false;
 }
 ?>
 <!DOCTYPE html>
@@ -49,15 +63,25 @@ Contém: manipulação de pontuação, feedback e redirecionamento para `questao
         // Dados e processamento da questao 1.
         const TOTAL_QUESTOES = 10;
         $questao = 1;
-        $pontuacao = 0;
+        $pontuacao = (int) ($_SESSION['quiz_score'] ?? 0);
         $respostaCorreta = "b";
         $mensagem = "";
         $classe = "";
+        $jaRespondida = array_key_exists($questao, $_SESSION['quiz_answers'] ?? []);
 
         if (isset($_POST["validar"])) {
             if (isset($_POST["resposta"])) {
+                if ($jaRespondida) {
+                    $_POST["resposta"] = $_SESSION['quiz_answers'][$questao];
+                } else {
+                    $_SESSION['quiz_answers'][$questao] = (string) $_POST["resposta"];
+                }
+
                 if ($_POST["resposta"] == $respostaCorreta) {
-                    $pontuacao = $pontuacao + 1;
+                    if (!$jaRespondida) {
+                        $_SESSION['quiz_score'] = $pontuacao + 1;
+                    }
+                    $pontuacao = (int) ($_SESSION['quiz_score'] ?? 0);
                     $mensagem = "Correto! Hidrocarbonetos sao compostos formados apenas por carbono e hidrogenio.";
                     $classe = "correto";
                 } else {

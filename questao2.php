@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+if (app_database_configured() && empty($_SESSION['user_id'])) {
+    header('Location: login.php?next=questao1.php%3Fnovo%3D1');
+    exit;
+}
+if (empty($_SESSION['quiz_attempt_id'])) {
+    header('Location: questao1.php?novo=1');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <!--
 Arquivo: questao2.php
@@ -32,20 +44,24 @@ Contém: lógica de validação e navegação para `questao3.php`.
         // Dados e processamento da questao 2.
         const TOTAL_QUESTOES = 10;
         $questao = 2;
-        $pontuacao = 0;
+        $pontuacao = (int) ($_SESSION['quiz_score'] ?? 0);
         $respostaCorreta = "c";
         $mensagem = "";
         $classe = "";
-
-        if (isset($_GET["pontos"])) {
-            $pontuacao = $_GET["pontos"];
-        }
+        $jaRespondida = array_key_exists($questao, $_SESSION['quiz_answers'] ?? []);
 
         if (isset($_POST["validar"])) {
-            $pontuacao = $_POST["pontos"];
             if (isset($_POST["resposta"])) {
+                if ($jaRespondida) {
+                    $_POST["resposta"] = $_SESSION['quiz_answers'][$questao];
+                } else {
+                    $_SESSION['quiz_answers'][$questao] = (string) $_POST["resposta"];
+                }
                 if ($_POST["resposta"] == $respostaCorreta) {
-                    $pontuacao = $pontuacao + 1;
+                    if (!$jaRespondida) {
+                        $_SESSION['quiz_score'] = $pontuacao + 1;
+                    }
+                    $pontuacao = (int) ($_SESSION['quiz_score'] ?? 0);
                     $mensagem = "Correto! Alcoois apresentam o grupo hidroxila, representado por -OH.";
                     $classe = "correto";
                 } else {
