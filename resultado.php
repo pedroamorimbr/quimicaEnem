@@ -203,9 +203,6 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
                 <a class="botao secundario" href="central_conhecimento.php">
                     Revisar conteúdos
                 </a>
-                <a class="botao secundario" href="index.php">
-                    Voltar ao início
-                </a>
 
             </div>
 
