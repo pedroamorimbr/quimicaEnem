@@ -1,5 +1,6 @@
 <?php
 
+// Centraliza acesso à configuração para aceitar variáveis do ambiente e do hosting.
 function app_env(string $name): string
 {
     $value = getenv($name);
@@ -10,6 +11,7 @@ function app_env(string $name): string
     return isset($_ENV[$name]) ? (string) $_ENV[$name] : '';
 }
 
+// Mantém o modo sem banco disponível quando nenhuma configuração MySQL foi informada.
 function app_database_configured(): bool
 {
     if (app_env('DATABASE_URL') !== '' || app_env('MYSQL_PUBLIC_URL') !== '') {
@@ -24,6 +26,7 @@ function app_database_configured(): bool
     return $host !== '' && $name !== '' && $user !== '' && $password !== '';
 }
 
+// Abre uma conexão PDO reutilizável e aceita URL completa ou parâmetros separados.
 function app_db(): PDO
 {
     static $connection = null;
@@ -67,6 +70,7 @@ function app_db(): PDO
     return $connection;
 }
 
+// Persiste sessões no MySQL para que o estado do estudante sobreviva a execuções serverless.
 final class AppDatabaseSessionHandler implements SessionHandlerInterface, SessionUpdateTimestampHandlerInterface
 {
     public function open(string $path, string $name): bool
@@ -142,6 +146,7 @@ final class AppDatabaseSessionHandler implements SessionHandlerInterface, Sessio
     }
 }
 
+// Configura o cookie da sessão e seleciona o armazenamento em banco quando disponível.
 function app_start_session(): void
 {
     if (session_status() === PHP_SESSION_ACTIVE) {
@@ -180,6 +185,7 @@ function app_start_session(): void
     }
 }
 
+// Gera e valida tokens de formulário para bloquear envios sem a sessão correspondente.
 function app_csrf_token(): string
 {
     if (empty($_SESSION['_csrf'])) {
@@ -197,6 +203,7 @@ function app_verify_csrf(): bool
         && hash_equals($_SESSION['_csrf'], $token);
 }
 
+// Resolve o usuário autenticado a partir do identificador guardado na sessão.
 function app_current_user(): ?array
 {
     if (empty($_SESSION['user_id'])) {
@@ -215,6 +222,7 @@ function app_current_user(): ?array
     return $user;
 }
 
+// Permite redirecionamentos apenas para páginas locais com nomes aceitos pelo projeto.
 function app_safe_next(?string $next): string
 {
     if ($next !== null && preg_match('/^[a-zA-Z0-9_-]+\.php(?:\?[a-zA-Z0-9_=&%-]*)?$/D', $next)) {
@@ -224,6 +232,7 @@ function app_safe_next(?string $next): string
     return 'index.php';
 }
 
+// Escapa texto antes de inseri-lo no HTML.
 function app_escape(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');

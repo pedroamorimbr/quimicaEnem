@@ -1,4 +1,5 @@
 <?php
+// Formata texto da resposta sem interpretar HTML enviado pelo modelo.
 function leonardia_format_assistant_message(string $text): string {
     $lines = preg_split('/\R/u', htmlspecialchars($text, ENT_QUOTES, 'UTF-8'));
 
@@ -32,6 +33,7 @@ function leonardia_format_assistant_message(string $text): string {
     return nl2br(implode("\n", $lines), false);
 }
 
+// Lê configuração do ambiente sem expor chaves no HTML.
 function leonardia_get_env(string $key, $default = null) {
     $value = getenv($key);
     if ($value !== false && $value !== '') {
@@ -85,6 +87,7 @@ function leonardia_get_greeting(): string {
     return 'Boa noite';
 }
 
+// Prepara a instrução de Química e escolhe o adaptador do provedor configurado.
 function leonardia_call_ai(string $question, ?string $elementoContexto = null, ?string $simboloContexto = null): array {
     $apiKey = leonardia_get_env('LEONARDIA_API_KEY');
     $provider = strtolower((string) leonardia_get_env('LEONARDIA_API_PROVIDER', 'openai'));
@@ -196,6 +199,7 @@ function leonardia_call_ai(string $question, ?string $elementoContexto = null, ?
     ];
 }
 
+// Tenta os modelos configurados e limita retentativas a erros transitórios.
 function leonardia_call_openrouter(string $prompt, string $systemInstruction, string $apiKey): array {
     $url = rtrim((string) leonardia_get_env('LEONARDIA_API_URL', 'https://openrouter.ai/api/v1/chat/completions'), '/');
     $models = array_values(array_unique(array_filter([
@@ -281,6 +285,7 @@ function leonardia_safe_provider_error(string $message): string {
     return trim($message);
 }
 
+// Executa POST JSON e devolve corpo, status HTTP e erro de transporte separadamente.
 function leonardia_http_post_json_result(string $url, array $payload, array $headers = []): array {
     $jsonPayload = json_encode($payload);
     if ($jsonPayload === false) {
@@ -311,6 +316,7 @@ function leonardia_http_post_json_result(string $url, array $payload, array $hea
     ];
 }
 
+// Aceita contexto opcional vindo do PeriodicLab e valida o identificador da conversa.
 $elementoContexto = isset($_GET['element']) && $_GET['element'] !== '' ? htmlspecialchars($_GET['element'], ENT_QUOTES, 'UTF-8') : null;
 $simboloContexto = isset($_GET['symbol']) && $_GET['symbol'] !== '' ? htmlspecialchars($_GET['symbol'], ENT_QUOTES, 'UTF-8') : null;
 $conversationId = (string) ($_POST['conversation_id'] ?? $_GET['conversation_id'] ?? '');
@@ -331,6 +337,7 @@ $mensagens = [
 $erro = '';
 $ultimaResposta = '';
 
+// O envio acontece no servidor, que contata o provedor usando a chave privada.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pergunta = trim((string) ($_POST['pergunta'] ?? ''));
 

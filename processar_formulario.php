@@ -17,6 +17,7 @@ $dificuldade = $diagnostico["dificuldade"];
 $horas = $diagnostico["horas"];
 
 // O processamento transforma as respostas em uma recomendação de estudo.
+// As faixas de horas definem a intensidade sugerida para o plano inicial.
 if ($horas >= 5) {
     $rotina = "Sua disponibilidade permite estudar com uma rotina completa.";
     $pontuacao = 3;
@@ -40,6 +41,7 @@ $classificacao = $pontuacao === 3 ? "Plano intensivo" : ($pontuacao === 2 ? "Pla
 $questionarioCompleto = $dificuldade !== "Ainda não sei";
 $focoExercicios = $questionarioCompleto ? "Questionário completo" : "Funções oxigenadas";
 $destinoExercicios = $questionarioCompleto ? "questao1.php?novo=1" : "questoes_foco.php";
+// O foco fica na sessão para orientar o quiz personalizado e seus resultados.
 $_SESSION["foco"] = $focoExercicios;
 ?>
 <!DOCTYPE html>

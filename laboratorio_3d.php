@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Interface do catálogo e do visualizador molecular WebGL. -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">

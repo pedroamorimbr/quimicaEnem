@@ -1,3 +1,4 @@
+// Catálogo químico, construção dos modelos e controles do renderizador molecular WebGL.
 (() => {
     'use strict';
 
@@ -22,6 +23,7 @@
         return;
     }
 
+    // Operações vetoriais usadas pela geometria molecular e pela câmera 3D.
     const vector = (x, y, z) => ({ x, y, z });
     const atom = (element, x, y, z) => ({ element, x, y, z });
     const valences = { C: 4, H: 1, O: 2, N: 3, F: 1, Cl: 1, Na: 1, S: 6, Ca: 2 };
@@ -72,6 +74,7 @@
         });
     }
 
+    // Estima direções de ligação para completar os hidrogênios dos modelos.
     function hydrogenDirections(element, count, neighbors, hasDoubleBond, planar) {
         const sum = neighbors.reduce((total, direction) => add(total, direction), vector(0, 0, 0));
         if (element === 'O' && count === 1 && neighbors.length === 1) {
@@ -107,6 +110,7 @@
         return aroundAxis(vector(0, 0, 1), count, 1 / 3);
     }
 
+    // Completa a estrutura por valência e valida índices das ligações recebidas.
     function buildMolecule(sourceAtoms, sourceBonds, options = {}) {
         const atoms = sourceAtoms.map(item => ({ ...item }));
         const bonds = sourceBonds.map(bond => [...bond]);
@@ -190,6 +194,7 @@
         return particles;
     })();
 
+    // Catálogo de átomos e moléculas com coordenadas, propriedades e ligações.
     const molecules = [
         {
             id: 'hydrogen-atom', name: 'Átomo de hidrogênio', formula: '¹H', structure: 'Modelo de Bohr didático: 1 próton no núcleo e 1 elétron na primeira camada.',
@@ -668,6 +673,7 @@
         }, {});
     }
 
+    // Compara as fórmulas declaradas com os átomos de cada modelo antes da renderização.
     const validFormulaCounts = {
         'calcium-carbonate': { Ca: 1, C: 1, O: 3 }, 'water': { H: 2, O: 1 },
         'carbon-dioxide': { C: 1, O: 2 }, 'carbon-monoxide': { C: 1, O: 1 },
@@ -797,6 +803,7 @@
         }
     });
 
+    // Estado do modelo selecionado, animação, seleção de átomo e câmera.
     let activeModel = null;
     let gl = null;
     let program = null;
@@ -815,6 +822,7 @@
     let renderStyle = 'ball-stick';
     const camera = { yaw: -0.25, pitch: 0.35, panX: 0, panY: 0, distance: 6, fitDistance: 6 };
 
+    // Shaders calculam posição projetada e iluminação básica dos objetos WebGL.
     const vertexShaderSource = `
         attribute vec3 aPosition;
         attribute vec3 aNormal;
@@ -853,6 +861,7 @@
         if (badge) badge.innerHTML = '<i aria-hidden="true"></i> Renderização indisponível';
     }
 
+    // Compila os shaders WebGL e informa erros do driver com contexto legível.
     function compileShader(type, source) {
         const shader = gl.createShader(type);
         if (!shader) throw new Error('O navegador não conseguiu criar um shader WebGL.');
@@ -884,6 +893,7 @@
         return shaderProgram;
     }
 
+    // Converte vértices em buffers reutilizáveis pelo renderizador.
     function createMesh(vertices) {
         const positionData = [];
         const normalData = [];
@@ -952,6 +962,7 @@
         return createMesh(vertices);
     }
 
+    // Matrizes 4x4 transformam câmera e modelos para o espaço de renderização.
     function identity() {
         return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
     }
@@ -1222,6 +1233,7 @@
             ).join('');
     }
 
+    // Desenha órbitas, ligações e átomos; a animação é refeita quadro a quadro.
     function renderFrame(timestamp) {
         if (!gl || !program || !activeModel) return;
         if (autoRotate && previousFrame) camera.yaw += Math.min(timestamp - previousFrame, 50) * 0.00065;
@@ -1269,6 +1281,7 @@
         animationFrame = window.requestAnimationFrame(renderFrame);
     }
 
+    // Atualiza os dados didáticos e ajusta a câmera para enquadrar o modelo escolhido.
     function setSelectedModel(item) {
         activeModel = {
             id: item.id,
@@ -1333,6 +1346,7 @@
         }
     }
 
+    // Prepara o contexto, os shaders e as malhas; exibe erro explícito se falhar.
     function initializeWebGL() {
         try {
             gl = canvas.getContext('webgl', { alpha: true, antialias: true, depth: true, powerPreference: 'low-power' }) ||
@@ -1384,6 +1398,7 @@
         document.getElementById('selected-name').textContent = 'Visualização 3D indisponível';
     }
 
+    // Conecta catálogo, busca, aparência, câmera e seleção de átomos à interface.
     modelList.addEventListener('click', event => {
         const button = event.target.closest('button[data-model-id]');
         if (!button) return;

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 app_start_session();
 
+// Usuários autenticados não precisam abrir outro cadastro.
 if (app_current_user()) {
     header('Location: index.php');
     exit;
@@ -12,6 +13,7 @@ $erro = '';
 $nome = '';
 $email = '';
 
+// Valida os dados antes de criar a conta e seu perfil inicial.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $next = app_safe_next(isset($_POST['next']) ? (string) $_POST['next'] : null);
     $nome = trim((string) ($_POST['nome'] ?? ''));
@@ -31,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erro = 'As senhas não conferem.';
     } else {
         try {
+            // Conta e perfil são criados juntos para evitar cadastros incompletos.
             $database = app_db();
             $database->beginTransaction();
             $statement = $database->prepare(
@@ -46,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ->execute(['user_id' => $userId]);
             $database->commit();
 
+            // Troca o identificador após o login automático para reduzir risco de fixação de sessão.
             session_regenerate_id(true);
             $_SESSION['user_id'] = $userId;
             header('Location: formulario.php');

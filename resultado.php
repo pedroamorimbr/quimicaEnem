@@ -11,6 +11,7 @@ $pontuacao = 0;
 $erros = 0;
 $tempoRegistrado = 0;
 
+// Grava a tentativa concluída uma única vez e carrega o histórico da conta.
 try {
     if (app_database_configured() && !empty($_SESSION['user_id'])) {
         $usuario = app_current_user();
@@ -31,6 +32,7 @@ try {
                 'total_questions' => TOTAL_QUESTOES,
                 'elapsed_seconds' => $elapsedSeconds,
             ]);
+            // Limpa apenas depois de salvar, evitando gravar a mesma tentativa novamente.
             unset(
                 $_SESSION['quiz_attempt_id'],
                 $_SESSION['quiz_started_at'],
@@ -41,6 +43,7 @@ try {
         }
 
         if ($usuario) {
+            // A tela mostra até as 20 tentativas mais recentes deste estudante.
             $attempts = app_db()->prepare(
                 'SELECT score, total_questions, elapsed_seconds, completed_at
                  FROM quiz_attempts WHERE user_id = :user_id
@@ -57,6 +60,7 @@ try {
         }
     }
 
+    // Sem banco, a página mostra somente o resultado que ainda está na sessão ativa.
     if (!app_database_configured() && !empty($_SESSION['quiz_completed'])) {
         $score = filter_var($_SESSION['quiz_score'] ?? null, FILTER_VALIDATE_INT);
         if ($score !== false && $score >= 0 && $score <= TOTAL_QUESTOES) {

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 app_start_session();
 
+// Com o MySQL ativo, o diagnóstico fica associado a uma conta autenticada.
 $usuario = app_database_configured() ? app_current_user() : null;
 if (app_database_configured() && !$usuario) {
     header('Location: login.php?next=formulario.php');
@@ -33,6 +34,7 @@ if ($modoRefazer) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Normaliza os campos recebidos e valida cada valor antes de usá-lo.
     foreach ($dados as $campo => $valor) {
         $dados[$campo] = trim($_POST[$campo] ?? "");
     }
@@ -55,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erros["email"] = "Digite um e-mail válido.";
     }
 
-    // A validação do e-mail acontece diretamente dentro do filter_var.
+    // Confere se os campos numéricos estão dentro dos limites aceitos pelo diagnóstico.
     $idade = filter_var($dados["idade"], FILTER_VALIDATE_INT, [
         "options" => ["min_range" => 10, "max_range" => 100]
     ]);
@@ -85,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (empty($erros) && app_database_configured()) {
         try {
+            // Atualiza o perfil existente ou cria o primeiro registro para esta conta.
             $profileUpdate = app_db()->prepare(
                 'INSERT INTO student_profiles (user_id, age, grade, study_goal, weekly_study_hours)
                  VALUES (:user_id, :age, :grade, :study_goal, :hours)

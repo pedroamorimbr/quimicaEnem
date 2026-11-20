@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Apresentação do projeto, da equipe e dos professores envolvidos. -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">

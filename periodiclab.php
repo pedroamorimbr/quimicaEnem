@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Interface da tabela periódica; dados e interações ficam em periodiclab.js. -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">

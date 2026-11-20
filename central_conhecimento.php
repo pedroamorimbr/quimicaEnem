@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Estrutura da biblioteca; os módulos, aulas e progresso são montados por central-conhecimento.js. -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">

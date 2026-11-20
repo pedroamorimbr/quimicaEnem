@@ -1,3 +1,4 @@
+// Base dos 118 elementos; row/col posicionam células e os demais campos alimentam filtros e detalhes.
 const PERIODIC_ELEMENTS = [
     { atomicNumber: 1, symbol: 'H', name: 'Hidrogênio', mass: '1.008', family: 'Não metal', category: 'nonmetals', group: 1, period: 1, row: 1, col: 1, state: 'Gasoso', valence: '1', electronicConfiguration: '1s¹', electronegativity: '2,20', atomicRadius: '53 pm', ionizationEnergy: '1312 kJ/mol', characteristics: 'Elemento mais leve e com uma estrutura atômica simples.', occurrence: 'Presente na água, compostos orgânicos e em estrelas.', applications: 'Produção de amônia, combustíveis e materiais industriais.', curiosities: 'É o principal combustível no interior do Sol.', colorClass: 'nonmetals' },
     { atomicNumber: 2, symbol: 'He', name: 'Hélio', mass: '4.0026', family: 'Gás nobre', category: 'noble-gases', group: 18, period: 1, row: 1, col: 18, state: 'Gasoso', valence: '2', electronicConfiguration: '1s²', electronegativity: '—', atomicRadius: '31 pm', ionizationEnergy: '2372 kJ/mol', characteristics: 'Gás inerte por possuir camada de valência completa.', occurrence: 'Encontrado em jazidas de gás natural e em estrelas.', applications: 'Resfriamento criogênico e uso em laser e gases de proteção.', curiosities: 'Foi identificado pela análise espectral do Sol.', colorClass: 'noble-gases' },
@@ -243,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let answeredQuestions = 0;
     let lastFocusedElement = null;
 
+    // Explicações qualitativas das tendências exibidas na legenda da tabela.
     const trendInfo = {
         radius: {
             title: 'Raio atômico',
@@ -266,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Detecta divergências de quantidade e de coordenadas antes de montar a tabela.
     if (PERIODIC_ELEMENTS.length !== 118 || PERIODIC_ELEMENTS.some((element, index) =>
         element.atomicNumber !== index + 1 ||
         element.group < 1 || element.group > 18 ||
@@ -278,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getActiveElement = () => PERIODIC_ELEMENTS.find((element) => element.atomicNumber === state.selected) || PERIODIC_ELEMENTS[0];
 
+    // Gera os filtros de família e atualiza a tabela quando uma família é escolhida.
     const renderLegend = () => {
         const legend = document.getElementById('periodicLegend');
         legend.innerHTML = Object.entries(familyMeta)
@@ -299,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Sincroniza a explicação de tendência com a propriedade selecionada.
     const renderTrend = () => {
         const selectedTrend = trendInfo[state.trend];
         trendExplanation.innerHTML = `<strong>${selectedTrend.title}:</strong> ${selectedTrend.text} <span>As faixas na tabela são uma representação qualitativa, não valores experimentais.</span>`;
@@ -311,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
         periodicGrid.dataset.trend = state.trend;
     };
 
+    // Monta uma questão rápida e bloqueia as opções após a primeira resposta.
     const buildQuestion = () => {
         const current = challenges[challengeIndex];
         if (!current) return;
@@ -356,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lastFocusedElement = null;
     };
 
+    // Exibe detalhes do elemento e gerencia o foco do painel lateral acessível.
     const openElementDrawer = (element) => {
         if (!infoPanel.classList.contains('is-open')) {
             lastFocusedElement = document.activeElement;
@@ -446,6 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     };
 
+    // Aplica busca e filtros antes de reconstruir as células da tabela periódica.
     const renderTable = () => {
         const filtered = PERIODIC_ELEMENTS.filter((element) => {
             const matchesFilter = state.filter === 'all' || element.category === state.filter;
@@ -517,6 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return tendency >= 0.66 ? 'high' : tendency >= 0.34 ? 'medium' : 'low';
     };
 
+    // Conecta busca, filtros, tendências, desafios e navegação acessível do painel.
     periodicGrid.addEventListener('click', (event) => {
         const target = event.target.closest('.element-cell');
         if (!target) return;

@@ -1,3 +1,4 @@
+-- Contas de estudantes; o e-mail é único e a senha é armazenada como hash.
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(80) NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     UNIQUE KEY users_email_unique (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Diagnóstico e preferências de estudo, vinculados à conta do estudante.
 CREATE TABLE IF NOT EXISTS student_profiles (
     user_id BIGINT UNSIGNED NOT NULL,
     age TINYINT UNSIGNED NULL,
@@ -20,6 +22,7 @@ CREATE TABLE IF NOT EXISTS student_profiles (
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Dados de sessão compartilhados entre execuções da aplicação na Vercel.
 CREATE TABLE IF NOT EXISTS app_sessions (
     session_id VARCHAR(128) NOT NULL,
     payload MEDIUMBLOB NOT NULL,
@@ -28,6 +31,7 @@ CREATE TABLE IF NOT EXISTS app_sessions (
     KEY app_sessions_expires_at_idx (expires_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Histórico de simulados concluídos; a chave de tentativa evita duplicidade.
 CREATE TABLE IF NOT EXISTS quiz_attempts (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id BIGINT UNSIGNED NOT NULL,

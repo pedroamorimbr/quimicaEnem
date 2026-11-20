@@ -1,6 +1,8 @@
+// Biblioteca didática: define o conteúdo das aulas e renderiza a navegação no navegador.
 (() => {
     'use strict';
 
+    // Cada módulo fornece conteúdo compartilhado pelas aulas listadas em topics.
     const modules = [
         {
             title: 'Química Geral', description: 'Matéria, propriedades, estados físicos e transformações observáveis.',
@@ -324,6 +326,7 @@
         }
     ];
 
+    // O progresso e as preferências desta biblioteca ficam no armazenamento local.
     const storageKey = 'playChemistryKnowledgeV1';
     const state = { completed: [], favorites: [], scores: [], lastLesson: '', expanded: '', favoritesOnly: false, persistenceError: false };
     const byId = new Map();
@@ -359,6 +362,7 @@
         elements.status.textContent = 'Não foi possível salvar seu progresso neste navegador. As alterações desta sessão ainda funcionam.';
     }
 
+    // Restaura apenas identificadores de aulas que ainda existem no catálogo.
     function loadState() {
         try {
             const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
@@ -419,6 +423,7 @@
         return !query || text.includes(query);
     }
 
+    // As três telas usam o mesmo estado: módulos, aula aberta e favoritos.
     function renderModules() {
         const query = elements.search.value.trim().toLocaleLowerCase('pt-BR');
         const visibleModules = modules.filter(module => lessonOrder.some(lesson => lesson.module === module && matches(lesson, query)));
@@ -454,6 +459,7 @@
         updateSummary();
     }
 
+    // Monta a aula selecionada e mantém a URL sincronizada com o histórico do navegador.
     function renderLesson(id, updateHistory = true) {
         const lesson = byId.get(id);
         if (!lesson) {
@@ -556,6 +562,7 @@
         else renderModules();
     });
 
+    // Trata ações dos cartões e aulas por delegação, inclusive após nova renderização.
     document.addEventListener('click', event => {
         const button = event.target.closest('button');
         if (!button) return;
@@ -585,6 +592,7 @@
         }
     });
 
+    // Corrige o exercício da aula e registra o resultado no progresso local.
     document.addEventListener('submit', event => {
         const form = event.target.closest('form[data-quiz]');
         if (!form) return;

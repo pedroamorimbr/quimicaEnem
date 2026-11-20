@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Página inicial e ponto de entrada para os recursos de estudo da plataforma. -->
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">

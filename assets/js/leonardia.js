@@ -1,3 +1,4 @@
+// Mantém o histórico local do chat e controla envio, cópia e navegação responsiva.
 document.addEventListener('DOMContentLoaded', () => {
     const app = document.querySelector('#leonardiaChat');
     const chat = document.querySelector('#waChat');
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!app || !chat || !form || !textarea || !sendButton) return;
 
+    // O histórico fica neste navegador; a resposta da IA é obtida pelo servidor PHP.
     const historyKey = 'leonardia:history:v1';
     const activeConversationKey = 'leonardia:active:v1';
     const params = new URLSearchParams(window.location.search);
@@ -151,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getMessageText = (message) => message.dataset.messageText || '';
 
+    // Incorpora ao histórico local a conversa renderizada pelo servidor após o envio.
     const storeServerResponse = () => {
         const id = app.dataset.conversationId || conversationField.value || makeConversationId();
         const incoming = Array.from(chat.querySelectorAll('.message[data-role]'))
@@ -224,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebarToggle.setAttribute('aria-label', 'Abrir histórico');
     };
 
+    // Reabre uma conversa em modo somente leitura ou inicia uma conversa nova.
     if (params.get('new') === '1') {
         try {
             window.sessionStorage.removeItem(activeConversationKey);
@@ -247,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderHistoryList(requestedId);
     }
 
+    // Evita envios vazios e mostra o estado de carregamento enquanto o servidor responde.
     if (form) {
         form.addEventListener('submit', (event) => {
             if (isReadOnly || textarea.value.trim() === '') {
@@ -288,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Copia a resposta com a API moderna e usa uma alternativa para navegadores antigos.
     chat.addEventListener('click', async (event) => {
         const copyButton = event.target.closest('.message-copy');
         if (!copyButton) return;

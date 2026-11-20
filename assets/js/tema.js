@@ -1,6 +1,7 @@
-// Aguarda o carregamento completo do HTML antes de executar o script
+// Controla navegação móvel, preferências visuais e recursos de acessibilidade.
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Abre e fecha a navegação móvel, incluindo teclado e links do menu.
     const menuToggle = document.querySelector('.menu-toggle');
     const mainNav = document.querySelector('.main-nav');
 
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Obtém a referência do botão de troca de tema
+    // Inclina elementos interativos enquanto o ponteiro está sobre eles.
     const interativos = document.querySelectorAll(
         '.top-bar, .painel, .quadro, .acao-topo, .botao, .nota, .grafico-resultado, .grafico-circular, .imagem-estudo'
     );
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarEstado();
     });
 
+    // Cria o painel de acessibilidade em páginas que carregam este script.
     const accessibilityWidget = document.createElement('div');
     accessibilityWidget.className = 'accessibility-widget';
     accessibilityWidget.innerHTML = `
@@ -133,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Preferências são guardadas localmente para persistirem entre visitas.
     let fontScale = Number.parseInt(localStorage.getItem('accessibilityFontScale'), 10);
     if (!Number.isFinite(fontScale)) fontScale = 100;
     fontScale = Math.min(150, Math.max(80, fontScale));
@@ -179,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarAltoContraste(!document.body.classList.contains('high-contrast'));
     });
 
+    // A leitura usa a API de voz do navegador e informa quando ela não existe.
     const falaDisponivel = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
     let leituraAtual = null;
 

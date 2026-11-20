@@ -1,3 +1,4 @@
+// Monta estruturas moleculares didáticas e desenha sua projeção interativa em Canvas 2D.
 (() => {
     const viewer = document.getElementById('moleculeViewer');
     const canvas = document.getElementById('moleculeCanvas');
@@ -16,6 +17,7 @@
         return;
     }
 
+    // Vetores 3D e funções de geometria usados para posicionar átomos e ligações.
     const atom = (element, x, y, z) => ({ element, x, y, z });
     const valences = { C: 4, N: 3, O: 2, H: 1 };
     const add = (a, b) => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z });
@@ -51,6 +53,7 @@
         });
     };
 
+    // Completa os hidrogênios ausentes aproximando a geometria molecular do modelo.
     function hydrogenDirections(element, count, neighbors, hasDoubleBond, planarNitrogen, planarSide) {
         const sum = neighbors.reduce((total, direction) => add(total, direction), { x: 0, y: 0, z: 0 });
 
@@ -158,6 +161,7 @@
         return side;
     }
 
+    // Calcula valências, adiciona hidrogênios e prepara as ligações do modelo.
     function model(sourceAtoms, sourceBonds, planarNitrogens = []) {
         const atoms = sourceAtoms.map(item => ({ ...item }));
         const bonds = sourceBonds.map(bond => [...bond]);
@@ -316,6 +320,7 @@
         }
     });
 
+    // Relaciona as legendas do conteúdo da página às estruturas desenhadas abaixo.
     const captionToModel = [
         ['metano · ch4', 'methane'], ['eteno · c2h4', 'ethene'], ['etino · c2h2', 'ethyne'],
         ['buta-1,3-dieno', 'butadiene'], ['ciclo-hexano', 'cyclohexane'], ['benzeno', 'benzene'],
@@ -342,6 +347,7 @@
         H: ['#ffffff', '#dbeafe']
     };
 
+    // Converte coordenadas 3D para a tela e redesenha o modelo no Canvas.
     function resizeCanvas() {
         const bounds = canvas.getBoundingClientRect();
         if (!bounds.width || !bounds.height) return;
@@ -456,6 +462,7 @@
             });
     }
 
+    // Mantém a rotação automática enquanto o diálogo do visualizador estiver aberto.
     function animate(timestamp) {
         if (!viewer.open) return;
         if (autoRotate && !dragging && lastFrameTime) {
@@ -466,6 +473,7 @@
         frameId = window.requestAnimationFrame(animate);
     }
 
+    // Liga cada estrutura da página ao modelo correspondente e aos controles do diálogo.
     document.querySelectorAll('.structure-sample').forEach(sample => {
         sample.querySelectorAll('.functional-group').forEach(group => {
             const groupText = group.textContent || '';

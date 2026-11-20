@@ -1,3 +1,4 @@
+// Mantém o tempo do simulado no navegador para continuar a contagem entre páginas.
 document.addEventListener('DOMContentLoaded', () => {
 
     const cronometro = document.getElementById('cronometro');

@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 app_start_session();
 
+// Retorna o estudante autenticado ao destino local que iniciou o fluxo.
 $next = app_safe_next(isset($_GET['next']) ? (string) $_GET['next'] : null);
 if (app_current_user()) {
     header('Location: ' . $next);
@@ -11,6 +12,7 @@ if (app_current_user()) {
 $erro = '';
 $email = '';
 
+// Confere as credenciais no servidor; a senha nunca é comparada em texto puro no banco.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $next = app_safe_next(isset($_POST['next']) ? (string) $_POST['next'] : null);
     $email = strtolower(trim((string) ($_POST['email'] ?? '')));
@@ -29,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$user || !password_verify($senha, $user['password_hash'])) {
                 $erro = 'E-mail ou senha incorretos.';
             } else {
+                // Atualiza hashes antigos quando o algoritmo padrão do PHP muda.
                 if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
                     app_db()->prepare('UPDATE users SET password_hash = :hash WHERE id = :id')
                         ->execute([
@@ -37,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ]);
                 }
 
+                // Renova o identificador da sessão antes de registrar a autenticação.
                 session_regenerate_id(true);
                 $_SESSION['user_id'] = (int) $user['id'];
                 header('Location: ' . $next);

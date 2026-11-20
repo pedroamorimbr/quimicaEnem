@@ -1,5 +1,6 @@
 <?php
 
+// Despacha as rotas da Vercel para os arquivos PHP existentes no diretório do projeto.
 $projectRoot = realpath(dirname(__DIR__)) ?: dirname(__DIR__);
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $requestPath = urldecode($requestPath);
@@ -19,6 +20,7 @@ $withinProject = $candidate !== false
     && is_file($candidate)
     && strtolower(pathinfo($candidate, PATHINFO_EXTENSION)) === 'php';
 
+// Não permite executar caminhos inexistentes ou arquivos fora da raiz do projeto.
 if (!$withinProject) {
     http_response_code(404);
     echo 'Página não encontrada.';
