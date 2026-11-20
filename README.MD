@@ -1,84 +1,142 @@
 # PlayCHEMISTRY ENEM
 
-## Integrantes
+<div align="center">
 
-* Pedro Amorim
-* Kaike Medeiros
-* Henrique Rafael
+<img src="assets/images/logo/Logo%20neon%20de%20qu%C3%ADmica%20PLAY%20CHEMISTRY%20(1).png" alt="Logo do PlayCHEMISTRY ENEM" width="220">
 
----
+### Aprenda, pratique e evolua em Química para o ENEM
 
-## Tema do Projeto
+[![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=222222)](https://developer.mozilla.org/docs/Web/JavaScript)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/docs/Web/CSS)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
-* **Funções Orgânicas no ENEM**
-
-O PlayCHEMISTRY ENEM é um sistema web educacional desenvolvido para auxiliar estudantes na revisão dos principais conteúdos de Química Orgânica cobrados no Exame Nacional do Ensino Médio (ENEM).
-
-O sistema apresenta um questionário interativo com questões sobre funções orgânicas, permitindo ao usuário avaliar seus conhecimentos, acompanhar o tempo de realização e visualizar seu desempenho ao final da atividade.
+</div>
 
 ---
 
-## Tecnologias Utilizadas
+## Sobre o projeto
 
-* HTML5
-* CSS3
-* JavaScript
-* PHP
+O **PlayCHEMISTRY ENEM** é uma plataforma educacional desenvolvida para apoiar estudantes na preparação para o Exame Nacional do Ensino Médio.
 
----
-
-## Estrutura de pastas
-
-A estrutura do projeto foi organizada para separar recursos estáticos e páginas:
-
-* `assets/css/` — estilos compartilhados do projeto
-* `assets/js/` — scripts JavaScript (`tema.js` e `cronometro.js`)
-* `assets/images/` — imagens, ícones e fotos utilizadas nas páginas
-* `*.php` — páginas do sistema e lógica de cada etapa do questionário
-
-Essa organização facilita manutenção, evita arquivos soltos na raiz e corrige os caminhos dos recursos em todas as páginas.
+O sistema combina teoria organizada, exercícios interativos, diagnóstico de aprendizagem, acompanhamento de desempenho e uma assistente virtual especializada em Química.
 
 ---
 
-## Funcionalidades
+## Recursos da plataforma
 
-* Página inicial com apresentação do conteúdo;
-* Questionário com 10 questões;
-* Correção automática das respostas;
-* Barra de progresso;
-* Cronômetro de realização;
-* Modo escuro (Dark Mode);
-* Exibição da pontuação final;
-* Classificação de desempenho;
-* Revisão dos principais grupos funcionais.
-* Diagnóstico de aprendizagem com formulário PHP e recomendação de estudo.
-* Página de apresentação dos desenvolvedores com fotos e contatos.
-* PeriodicLab: tabela periódica interativa com 118 elementos, filtros, pesquisa e painel de informações.
+| Recurso | Descricao |
+| :--- | :--- |
+| 📚 Central de Conhecimento | Apostila digital com módulos, aulas e revisões |
+| 🧪 Laboratório 3D | Explora estruturas e representações tridimensionais |
+| 🧬 PeriodicLab | Pesquisa e consulta dos 118 elementos da tabela periódica |
+| 🤖 LeonardIA | Assistente de Inteligência Artificial para dúvidas de Química |
+| ⏱️ Simulado ENEM | Questões com cronômetro, correção e revisão imediata |
+| 📊 Meu Desempenho | Indicadores de acertos, pontuação e progresso |
+| 🌙 Tema escuro | Interface adaptada para leitura em ambientes com pouca luz |
+| 🎯 Trilha personalizada | Conteúdos recomendados de acordo com a dificuldade identificada |
 
-## Nova funcionalidade: diagnóstico de aprendizagem
+---
 
-A página `formulario.php` permite que o estudante informe nome, e-mail, idade,
-série escolar, conteúdo com maior dificuldade e horas disponíveis para estudar.
-Os dados são enviados por `POST` e validados no PHP com `empty()`, `preg_match()`
-e `filter_var()`. Depois da validação, `processar_formulario.php` classifica a
-rotina de estudos e apresenta uma recomendação relacionada às Funções Orgânicas.
+## LeonardIA
 
-Para utilizar a funcionalidade, abra a página inicial e clique em **Fazer
-diagnóstico de estudos**. Preencha todos os campos e selecione **Gerar
-diagnóstico**.
+A LeonardIA conversa em português do Brasil e foi configurada para atuar exclusivamente como tutora de Química.
 
-## Página dos desenvolvedores
+Ela pode explicar conceitos, orientar cálculos, apresentar etapas e ajudar no estudo dos principais conteúdos cobrados no ENEM.
 
-A página `desenvolvedores.php` apresenta os integrantes do projeto, suas fotos
-e e-mails para contato. Ela pode ser acessada pelo link no rodapé da página
-inicial.
+<div align="center">
 
-## Configuração da LeonardIA
+<img src="assets/images/leonardia-avatar.jpg" alt="Avatar da LeonardIA" width="160">
 
-A LeonardIA aceita OpenAI, Gemini ou OpenRouter. Configure a chave somente no
-servidor, nunca no JavaScript, em arquivos públicos ou no Git.
+</div>
 
-No XAMPP, as variáveis podem ser configuradas no `httpd.conf` do Apache:
+### Provedores suportados
+
+- OpenRouter
+- OpenAI
+- Google Gemini
+
+> Nunca exponha a chave da API no JavaScript, nos arquivos PHP versionados ou no navegador.
+> Todas as credenciais devem ficar somente nas variaveis de ambiente do servidor.
+
+---
+
+## Tecnologias
+
+```text
+HTML5       Estrutura das páginas
+CSS3        Interface responsiva e tema visual
+JavaScript  Interações e interface dinâmica
+PHP         Regras de página, validação e integração de IA
+cURL        Comunicação segura com provedores de IA
+```
+
+---
+
+## Estrutura do projeto
+
+```text
+quimicaEnem/
+├── assets/
+│   ├── css/              Estilos e responsividade
+│   ├── images/           Logos, avatares e ilustrações
+│   └── js/               Interações e dados de interface
+├── index.php             Página inicial
+├── central_conhecimento.php
+├── formulario.php        Diagnóstico do estudante
+├── laboratorio_3d.php
+├── leonardia.php         Chat e integração da IA
+├── periodiclab.php       Tabela periodica interativa
+├── questao1.php
+├── ...
+├── questao10.php
+├── resultado.php
+├── vercel.json           Configuração de deploy
+├── .env.example          Modelo das variaveis de ambiente
+└── README.MD
+```
+
+---
+
+## Executando localmente
+
+### Requisitos
+
+- XAMPP, Laragon ou outro servidor com PHP e cURL
+- Navegador moderno
+- Chave de API opcional para ativar a LeonardIA
+
+### Passo a passo
+
+1. Instale e inicie o Apache.
+2. Coloque o projeto em `C:\xampp\htdocs\`.
+3. Abra o projeto no navegador:
+
+```text
+http://localhost/Amorim/index.php
+```
+
+4. Complete o diagnóstico inicial.
+5. Explore os módulos, o PeriodicLab, o Laboratório 3D e a LeonardIA.
+
+---
+
+## Configurando a LeonardIA
+
+Copie [.env.example](.env.example) como referência das variáveis suportadas.
+
+| Variavel | Exemplo | Obrigatoria |
+| :--- | :--- | :---: |
+| `LEONARDIA_API_KEY` | chave do provedor | Sim |
+| `LEONARDIA_API_PROVIDER` | `openrouter` | Sim |
+| `LEONARDIA_MODEL` | `openrouter/free` | Nao |
+| `LEONARDIA_FALLBACK_MODEL` | outro modelo gratuito | Nao |
+| `LEONARDIA_API_URL` | URL personalizada | Nao |
+| `LEONARDIA_SITE_URL` | URL publica do site | Nao |
+
+### XAMPP
+
+Adicione no Apache:
 
 ```apache
 SetEnv LEONARDIA_API_KEY "sua-chave"
@@ -86,86 +144,72 @@ SetEnv LEONARDIA_API_PROVIDER "openrouter"
 SetEnv LEONARDIA_MODEL "openrouter/free"
 ```
 
-Em hospedagens que não oferecem variáveis de ambiente, como alternativa,
-crie `leonardia-secrets.php` **um nível acima da pasta pública do site**
-(`htdocs` ou `public_html`). O arquivo deve retornar um array PHP:
+Depois reinicie o Apache.
 
-```php
-<?php
-return [
-    'LEONARDIA_API_KEY' => 'sua-chave',
-    'LEONARDIA_API_PROVIDER' => 'openrouter',
-    'LEONARDIA_MODEL' => 'openrouter/free',
-];
-```
-
-O arquivo privado deve ficar fora da pasta pública e não deve ser enviado ao
-repositório. As variáveis de ambiente, quando definidas, têm prioridade sobre
-esse arquivo. `LEONARDIA_FALLBACK_MODEL` é opcional. Depois de alterar as
-variáveis no Apache local, reinicie o Apache.
-
-Na hospedagem, a IA também depende de o plano permitir requisições HTTPS de
-saída via cURL ao provedor escolhido. Faça um teste após publicar; não inclua
-a chave em páginas de diagnóstico públicas.
+---
 
 ## Publicação na Vercel
 
-O projeto já inclui `vercel.json` e `.env.example` para publicar o PHP e os
-arquivos estáticos na Vercel.
+O projeto inclui [vercel.json](vercel.json) para servir as páginas PHP e os recursos estáticos.
 
-1. Crie o projeto na Vercel e importe `pedroamorimbr/quimicaEnem`.
-2. Selecione o projeto sem alterar o diretório raiz.
-3. Em **Settings > Environment Variables**, cadastre as seguintes variáveis:
+1. Importe `pedroamorimbr/quimicaEnem` na Vercel.
+2. Use a raiz do repositorio como diretorio do projeto.
+3. Acesse **Settings > Environment Variables**.
+4. Cadastre as variaveis da LeonardIA.
+5. Selecione Production, Preview e Development.
+6. Crie um novo deploy.
 
-| Variável | Exemplo | Obrigatória |
-| --- | --- | --- |
-| `LEONARDIA_API_KEY` | chave do OpenRouter | Sim |
-| `LEONARDIA_API_PROVIDER` | `openrouter` | Sim |
-| `LEONARDIA_MODEL` | `openrouter/free` | Não |
-| `LEONARDIA_FALLBACK_MODEL` | outro modelo gratuito | Não |
-| `LEONARDIA_API_URL` | deixe vazio para usar o padrão | Não |
-| `LEONARDIA_SITE_URL` | URL final na Vercel | Não |
+Recomendação de provedores:
 
-Cadastre a chave nos ambientes Production, Preview e Development. Nunca cole
-a chave em `*.php`, JavaScript, `vercel.json`, `README` ou em outro arquivo
-versionado.
-
-Faça um novo deploy após cadastrar as variáveis. A chave fica disponível
-somente no servidor por meio de `LEONARDIA_API_KEY`; o navegador não recebe nem
-processa essa chave.
+| Opcao | Indicado para |
+| :--- | :--- |
+| Vercel | Testes, demos e implantação rápida |
+| Railway | Aplicações PHP com necessidades de backend |
+| Hostinger | Hospedagem tradicional brasileira em PHP |
 
 ---
 
-## Instruções de Uso
+## Conteúdos abordados
 
-1. Instale um servidor local compatível com PHP, como XAMPP, WAMP ou Laragon.
-2. Coloque a pasta do projeto dentro do diretório do servidor.
-3. Inicie o serviço Apache.
-4. Acesse o navegador e abra o projeto.
-5. Na página inicial, clique em **Iniciar Simulado**.
-6. Responda às questões apresentadas.
-7. Acompanhe o cronômetro durante a realização do questionário.
-8. Ao finalizar, consulte sua pontuação, percentual de acertos e tempo total de realização.
-9. Utilize o quadro de revisão para reforçar os conceitos estudados.
+- Hidrocarbonetos
+- Alcoois
+- Aldeídos
+- Cetonas
+- Ácidos carboxílicos
+- Ésteres
+- Éteres
+- Aminas
+- Amidas
+- Estequiometria
+- Termoquímica
+- Eletroquímica
+- Polaridade molecular
+- Tabela periodica
 
 ---
 
-## Objetivo Educacional
+## Equipe
 
-O objetivo do PlayCHEMISTRY ENEM é auxiliar estudantes na identificação e compreensão das principais funções orgânicas por meio de uma abordagem interativa, contribuindo para a preparação para o ENEM e demais vestibulares.
+| Integrante | Funcao |
+| :--- | :--- |
+| Pedro Amorim | Desenvolvimento do projeto |
+| Kaike Medeiros | Desenvolvimento do projeto |
+| Henrique Rafael | Desenvolvimento do projeto |
 
 ---
 
-## Conteúdos Abordados
+## Repositorio
 
-* Hidrocarbonetos
-* Álcoois
-* Aldeídos
-* Cetonas
-* Ácidos Carboxílicos
-* Ésteres
-* Éteres
-* Aminas
-* Amidas
+[![GitHub](https://img.shields.io/badge/GitHub-quimicaEnem-181717?style=for-the-badge&logo=github)](https://github.com/pedroamorimbr/quimicaEnem)
 
-Esses conteúdos representam alguns dos grupos funcionais mais frequentes em avaliações de Química Orgânica no ensino médio e em exames vestibulares.
+---
+
+<div align="center">
+
+**PlayCHEMISTRY ENEM**
+
+Educacao em ciencia, pesquisa e inovacao.
+
+Desenvolvido pela equipe Playbas
+
+</div>
