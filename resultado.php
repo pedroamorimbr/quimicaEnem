@@ -18,15 +18,26 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 </head>
 <body>
 
-    <!-- Barra superior -->
-    <div class="top-bar">
-        <div id="cronometro">00:00</div>
-    </div>
-
-    <!-- Cabeçalho -->
-    <header class="topo">
-        <h1>PlayCHEMISTRY ENEM</h1>
-        <p>Resultado final do questionário</p>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.php" aria-label="Voltar para a página inicial">
+                <img class="logo-site" src="assets/images/logo/Logo neon de química PLAY CHEMISTRY (1).png" alt="Logo Play Chemistry">
+                <div class="brand-copy">
+                    <span>PlayCHEMISTRY</span>
+                    <small>ENEM</small>
+                </div>
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+            <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+                <a href="index.php">Início</a>
+                <a href="central_conhecimento.php">Central de Conhecimento</a>
+                <a href="laboratorio_3d.php">Laboratório 3D</a>
+                <a href="periodiclab.php">PeriodicLab</a>
+                <a href="leonardia.php">LeonardIA</a>
+                <a href="resultado.php" class="active" aria-current="page">Meu Desempenho</a>
+                <a href="sobre.php">Sobre</a>
+            </nav>
+        </div>
     </header>
 
     <main class="pagina">
@@ -186,6 +197,12 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 
             <!-- Ações -->
             <div class="acoes resultado-acoes">
+                <a class="botao" href="questao1.php">
+                    Fazer novo simulado
+                </a>
+                <a class="botao secundario" href="central_conhecimento.php">
+                    Revisar conteúdos
+                </a>
                 <a class="botao secundario" href="index.php">
                     Voltar ao início
                 </a>
@@ -212,11 +229,10 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 
         const tempoFinal = `${minutos}:${seg}`;
 
-        document.getElementById('tempoFinal').textContent =
-            tempoFinal;
-
-        document.getElementById('cronometro').textContent =
-            tempoFinal;
+        const tempoFinalElement = document.getElementById('tempoFinal');
+        if (tempoFinalElement) {
+            tempoFinalElement.textContent = tempoFinal;
+        }
 
         const graficoCircular = document.querySelector('.grafico-circular');
 
