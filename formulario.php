@@ -11,8 +11,8 @@ if (app_database_configured() && !$usuario) {
 
 // Página do formulário de diagnóstico sobre Funções Orgânicas.
 $dados = [
-    "nome" => $usuario['name'],
-    "email" => $usuario['email'],
+    "nome" => $usuario['name'] ?? "",
+    "email" => $usuario['email'] ?? "",
     "idade" => "",
     "serie" => "",
     "dificuldade" => "",
