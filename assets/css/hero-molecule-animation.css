@@ -1,0 +1,38 @@
+.hero-visual .molecule {
+    --hero-molecule-scale: 1;
+    animation: hero-molecule-spin 18s linear infinite;
+}
+
+.hero-visual .molecule-atom {
+    animation: hero-molecule-label-counterspin 18s linear infinite;
+}
+
+@keyframes hero-molecule-spin {
+    from {
+        transform: scale(var(--hero-molecule-scale)) rotate(0deg);
+    }
+
+    to {
+        transform: scale(var(--hero-molecule-scale)) rotate(360deg);
+    }
+}
+
+@keyframes hero-molecule-label-counterspin {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@media (max-width: 520px) {
+    .hero-visual .molecule {
+        --hero-molecule-scale: .86;
+        transform-origin: center top;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-visual .molecule,
+    .hero-visual .molecule-atom {
+        animation: none;
+    }
+}
