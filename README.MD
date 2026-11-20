@@ -108,6 +108,32 @@ Na hospedagem, a IA também depende de o plano permitir requisições HTTPS de
 saída via cURL ao provedor escolhido. Faça um teste após publicar; não inclua
 a chave em páginas de diagnóstico públicas.
 
+## Publicação na Vercel
+
+O projeto já inclui `vercel.json` e `.env.example` para publicar o PHP e os
+arquivos estáticos na Vercel.
+
+1. Crie o projeto na Vercel e importe `pedroamorimbr/quimicaEnem`.
+2. Selecione o projeto sem alterar o diretório raiz.
+3. Em **Settings > Environment Variables**, cadastre as seguintes variáveis:
+
+| Variável | Exemplo | Obrigatória |
+| --- | --- | --- |
+| `LEONARDIA_API_KEY` | chave do OpenRouter | Sim |
+| `LEONARDIA_API_PROVIDER` | `openrouter` | Sim |
+| `LEONARDIA_MODEL` | `openrouter/free` | Não |
+| `LEONARDIA_FALLBACK_MODEL` | outro modelo gratuito | Não |
+| `LEONARDIA_API_URL` | deixe vazio para usar o padrão | Não |
+| `LEONARDIA_SITE_URL` | URL final na Vercel | Não |
+
+Cadastre a chave nos ambientes Production, Preview e Development. Nunca cole
+a chave em `*.php`, JavaScript, `vercel.json`, `README` ou em outro arquivo
+versionado.
+
+Faça um novo deploy após cadastrar as variáveis. A chave fica disponível
+somente no servidor por meio de `LEONARDIA_API_KEY`; o navegador não recebe nem
+processa essa chave.
+
 ---
 
 ## Instruções de Uso
