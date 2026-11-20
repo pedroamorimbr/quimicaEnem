@@ -50,15 +50,6 @@ Ela pode explicar conceitos, orientar cálculos, apresentar etapas e ajudar no e
 
 </div>
 
-### Provedores suportados
-
-- OpenRouter
-- OpenAI
-- Google Gemini
-
-> Nunca exponha a chave da API no JavaScript, nos arquivos PHP versionados ou no navegador.
-> Todas as credenciais devem ficar somente nas variaveis de ambiente do servidor.
-
 ---
 
 ## Tecnologias
@@ -67,8 +58,7 @@ Ela pode explicar conceitos, orientar cálculos, apresentar etapas e ajudar no e
 HTML5       Estrutura das páginas
 CSS3        Interface responsiva e tema visual
 JavaScript  Interações e interface dinâmica
-PHP         Regras de página, validação e integração de IA
-cURL        Comunicação segura com provedores de IA
+PHP         Regras de página e validação
 ```
 
 ---
@@ -92,7 +82,6 @@ quimicaEnem/
 ├── questao10.php
 ├── resultado.php
 ├── vercel.json           Configuração de deploy
-├── .env.example          Modelo das variaveis de ambiente
 └── README.MD
 ```
 
@@ -102,9 +91,8 @@ quimicaEnem/
 
 ### Requisitos
 
-- XAMPP, Laragon ou outro servidor com PHP e cURL
+- XAMPP, Laragon ou outro servidor com PHP
 - Navegador moderno
-- Chave de API opcional para ativar a LeonardIA
 
 ### Passo a passo
 
@@ -121,43 +109,14 @@ http://localhost/Amorim/index.php
 
 ---
 
-## Configurando a LeonardIA
-
-Copie [.env.example](.env.example) como referência das variáveis suportadas.
-
-| Variavel | Exemplo | Obrigatoria |
-| :--- | :--- | :---: |
-| `LEONARDIA_API_KEY` | chave do provedor | Sim |
-| `LEONARDIA_API_PROVIDER` | `openrouter` | Sim |
-| `LEONARDIA_MODEL` | `openrouter/free` | Nao |
-| `LEONARDIA_FALLBACK_MODEL` | outro modelo gratuito | Nao |
-| `LEONARDIA_API_URL` | URL personalizada | Nao |
-| `LEONARDIA_SITE_URL` | URL publica do site | Nao |
-
-### XAMPP
-
-Adicione no Apache:
-
-```apache
-SetEnv LEONARDIA_API_KEY "sua-chave"
-SetEnv LEONARDIA_API_PROVIDER "openrouter"
-SetEnv LEONARDIA_MODEL "openrouter/free"
-```
-
-Depois reinicie o Apache.
-
----
-
 ## Publicação na Vercel
 
 O projeto inclui [vercel.json](vercel.json) para servir as páginas PHP e os recursos estáticos.
 
 1. Importe `pedroamorimbr/quimicaEnem` na Vercel.
 2. Use a raiz do repositorio como diretorio do projeto.
-3. Acesse **Settings > Environment Variables**.
-4. Cadastre as variaveis da LeonardIA.
-5. Selecione Production, Preview e Development.
-6. Crie um novo deploy.
+3. Selecione o framework apropriado ou mantenha as configurações padrão.
+4. Crie um novo deploy.
 
 Recomendação de provedores:
 
