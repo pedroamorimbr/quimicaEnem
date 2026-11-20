@@ -89,6 +89,10 @@ function leonardia_call_ai(string $question, ?string $elementoContexto = null, ?
     $apiKey = leonardia_get_env('LEONARDIA_API_KEY');
     $provider = strtolower((string) leonardia_get_env('LEONARDIA_API_PROVIDER', 'openai'));
 
+    if (str_starts_with($apiKey, 'sk-or-v1-')) {
+        $provider = 'openrouter';
+    }
+
     if (empty($apiKey)) {
         return [
             'success' => false,
