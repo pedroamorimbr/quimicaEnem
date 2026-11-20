@@ -173,9 +173,16 @@ function leonardia_call_ai(string $question, ?string $elementoContexto = null, ?
     }
 
     if (isset($data['error']['message'])) {
+        $providerMessage = leonardia_safe_provider_error((string) $data['error']['message']);
+        $safeMessage = 'A autenticação da IA foi recusada. Verifique se a chave configurada na Vercel é válida.';
+        if (stripos($providerMessage, 'quota') !== false || stripos($providerMessage, 'credit') !== false) {
+            $safeMessage = 'A conta do provedor não possui créditos ou atingiu o limite disponível.';
+        } elseif (stripos($providerMessage, 'rate') !== false || stripos($providerMessage, '429') !== false) {
+            $safeMessage = 'O provedor recebeu muitas solicitações. Aguarde um momento e tente novamente.';
+        }
         return [
             'success' => false,
-            'message' => 'Erro da API: ' . $data['error']['message']
+            'message' => $safeMessage
         ];
     }
 
@@ -227,9 +234,16 @@ function leonardia_call_openrouter(string $prompt, string $systemInstruction, st
             }
 
             if ($response['error'] !== '') {
-                $lastMessage = 'Falha ao conectar com o OpenRouter: ' . $response['error'];
+                $lastMessage = 'Falha ao conectar com o OpenRouter. Verifique a conexão e tente novamente.';
             } elseif (isset($data['error']['message'])) {
-                $lastMessage = 'Erro do OpenRouter: ' . $data['error']['message'];
+                $providerMessage = leonardia_safe_provider_error((string) $data['error']['message']);
+                if (stripos($providerMessage, 'key') !== false || stripos($providerMessage, 'authentication') !== false || $response['status'] === 401 || $response['status'] === 403) {
+                    $lastMessage = 'A autenticação da IA foi recusada. Verifique se a chave configurada na Vercel é válida.';
+                } elseif (stripos($providerMessage, 'credit') !== false || stripos($providerMessage, 'quota') !== false) {
+                    $lastMessage = 'A conta do provedor não possui créditos ou atingiu o limite disponível.';
+                } else {
+                    $lastMessage = 'O OpenRouter recusou a solicitação. Verifique o modelo e os limites do provedor.';
+                }
             } elseif ($response['status'] === 429) {
                 $lastMessage = 'Muitas solicitações ao OpenRouter. Aguarde um momento e tente novamente.';
             } elseif ($response['status'] >= 500) {
@@ -255,6 +269,12 @@ function leonardia_http_post_json(string $url, array $payload, array $headers = 
     }
 
     return $response['body'];
+}
+
+function leonardia_safe_provider_error(string $message): string {
+    $message = preg_replace('/\bsk-[A-Za-z0-9_-]+\b/', '[CHAVE_OCULTADA]', $message) ?? $message;
+    $message = preg_replace('/(?:api[_ -]?key|token)\s*[:=]\s*[^\s,;]+/i', '$1 [CHAVE_OCULTADA]', $message) ?? $message;
+    return trim($message);
 }
 
 function leonardia_http_post_json_result(string $url, array $payload, array $headers = []): array {
