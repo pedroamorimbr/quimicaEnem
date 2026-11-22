@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+
 // Formata texto da resposta sem interpretar HTML enviado pelo modelo.
 function leonardia_format_assistant_message(string $text): string {
     $lines = preg_split('/\R/u', htmlspecialchars($text, ENT_QUOTES, 'UTF-8'));
@@ -307,7 +310,6 @@ function leonardia_http_post_json_result(string $url, array $payload, array $hea
     $response = curl_exec($ch);
     $error = $response === false ? curl_error($ch) : '';
     $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
 
     return [
         'body' => $response === false ? '' : (string) $response,
@@ -364,7 +366,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeonardIA | PlayCHEMISTRY ENEM</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=leonardia-2">
+    <link rel="stylesheet" href="assets/css/style.css?v=leonardia-3">
 </head>
 <body class="leonardia-page">
     <header class="site-header">
