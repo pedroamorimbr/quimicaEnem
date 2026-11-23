@@ -2,12 +2,6 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 app_start_session();
 
-// Usuários autenticados não precisam abrir outro cadastro.
-if (app_current_user()) {
-    header('Location: index.php');
-    exit;
-}
-
 $next = app_safe_next(isset($_GET['next']) ? (string) $_GET['next'] : null);
 $erro = '';
 $nome = '';
