@@ -117,6 +117,7 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <!-- Configurações da página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -147,6 +148,7 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
                 <a href="leonardia.php">LeonardIA</a>
                 <a href="resultado.php" class="active" aria-current="page">Meu Desempenho</a>
                 <a href="sobre.php">Sobre</a>
+                <a href="perfil.php">Perfil</a>
             </nav>
         </div>
     </header>
@@ -161,10 +163,6 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
 
             <?php if ($usuario) { ?>
                 <p>Conta: <strong><?php echo app_escape($usuario['name']); ?></strong></p>
-                <form method="POST" action="sair.php" class="acoes">
-                    <input type="hidden" name="_csrf" value="<?php echo app_escape(app_csrf_token()); ?>">
-                    <button class="botao secundario" type="submit">Sair da conta</button>
-                </form>
             <?php } ?>
 
             <?php if ($erroBanco !== '') { ?>
@@ -174,7 +172,6 @@ Contém: cálculo de porcentagem, mensagem de feedback e exibição do tempo fin
             <?php if (!$usuario && app_database_configured()) { ?>
                 <p>Entre na sua conta para salvar e consultar seu histórico de simulados.</p>
                 <div class="acoes">
-                    <a class="botao" href="login.php?next=resultado.php">Entrar</a>
                     <a class="botao secundario" href="cadastro.php?next=resultado.php">Criar conta</a>
                 </div>
             <?php } ?>

@@ -1,7 +1,17 @@
+<?php
+require_once __DIR__ . '/includes/bootstrap.php';
+app_start_session();
+
+if (!app_current_user()) {
+    header('Location: login.php?next=index.php', true, 302);
+    exit;
+}
+?>
 <!DOCTYPE html>
 <!-- Página inicial e ponto de entrada para os recursos de estudo da plataforma. -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayCHEMISTRY ENEM</title>
@@ -28,7 +38,7 @@
                 <a href="leonardia.php">LeonardIA</a>
                 <a href="resultado.php">Meu Desempenho</a>
                 <a href="sobre.php">Sobre</a>
-                <a href="login.php">Entrar</a>
+                <a href="perfil.php">Perfil</a>
             </nav>
 
         </div>

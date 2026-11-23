@@ -2,12 +2,8 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 app_start_session();
 
-// Retorna o estudante autenticado ao destino local que iniciou o fluxo.
+// Mantém esta tela acessível pela URL principal, inclusive para estudantes já autenticados.
 $next = app_safe_next(isset($_GET['next']) ? (string) $_GET['next'] : null);
-if (app_current_user()) {
-    header('Location: ' . $next);
-    exit;
-}
 
 $erro = '';
 $email = '';
@@ -60,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrar | PlayCHEMISTRY ENEM</title>

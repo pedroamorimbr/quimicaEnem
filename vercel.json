@@ -7,6 +7,10 @@
   },
   "routes": [
     {
+      "src": "/",
+      "dest": "/login.php"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
     },
