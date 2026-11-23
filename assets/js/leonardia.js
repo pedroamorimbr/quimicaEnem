@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const layout = document.querySelector('#leonardiaLayout');
     const sidebarToggle = document.querySelector('#sidebarToggle');
     const sidebarBackdrop = document.querySelector('#chatSidebarBackdrop');
+    const clearHistoryButton = document.querySelector('#clearHistoryButton');
     const readonlyNote = document.querySelector('#historyReadonlyNote');
     const thinkingMessage = document.querySelector('#thinkingMessage');
     const composerStatus = document.querySelector('#composerStatus');
@@ -226,6 +227,22 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebarToggle.setAttribute('aria-expanded', 'false');
         sidebarToggle.setAttribute('aria-label', 'Abrir histórico');
     };
+
+    if (clearHistoryButton) {
+        clearHistoryButton.addEventListener('click', () => {
+            if (!window.confirm('Deseja excluir todo o histórico de pesquisa da LeonardIA?')) return;
+
+            try {
+                window.localStorage.removeItem(historyKey);
+                window.sessionStorage.removeItem(activeConversationKey);
+                renderHistoryList('');
+                if (historyNote) historyNote.textContent = 'O histórico foi excluído deste navegador.';
+                window.location.href = 'leonardia.php?new=1';
+            } catch (error) {
+                reportStorageIssue('Não foi possível apagar o histórico deste navegador.');
+            }
+        });
+    }
 
     // Reabre uma conversa em modo somente leitura ou inicia uma conversa nova.
     if (params.get('new') === '1') {

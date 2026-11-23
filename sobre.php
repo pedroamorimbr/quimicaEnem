@@ -2,6 +2,7 @@
 <!-- Apresentação do projeto, da equipe e dos professores envolvidos. -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Conheça o projeto PlayCHEMISTRY ENEM, seus desenvolvedores e professores.">
@@ -28,6 +29,7 @@
                 <a href="leonardia.php">LeonardIA</a>
                 <a href="resultado.php">Meu Desempenho</a>
                 <a href="sobre.php" class="active" aria-current="page">Sobre</a>
+                <a href="perfil.php">Perfil</a>
             </nav>
         </div>
     </header>

@@ -363,10 +363,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeonardIA | PlayCHEMISTRY ENEM</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=leonardia-3">
+    <link rel="stylesheet" href="assets/css/style.css?v=leonardia-4">
 </head>
 <body class="leonardia-page">
     <header class="site-header">
@@ -388,6 +389,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a href="leonardia.php" class="active">LeonardIA</a>
                 <a href="resultado.php">Meu Desempenho</a>
                 <a href="sobre.php">Sobre</a>
+                <a href="perfil.php">Perfil</a>
             </nav>
 
         </div>
@@ -411,6 +413,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p class="history-empty">Suas conversas recentes aparecerão aqui.</p>
                     </div>
                 </div>
+                <button class="clear-history-button" id="clearHistoryButton" type="button">
+                    Excluir histórico de pesquisa
+                </button>
                 <p class="history-note">O histórico fica salvo somente neste navegador.</p>
             </aside>
 
@@ -546,6 +551,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </footer>
 
     <script src="assets/js/tema.js"></script>
-    <script src="assets/js/leonardia.js?v=leonardia-2"></script>
+    <script src="assets/js/leonardia.js?v=leonardia-3"></script>
 </body>
 </html>

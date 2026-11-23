@@ -2,6 +2,7 @@
 <!-- Interface do catálogo e do visualizador molecular WebGL. -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore modelos moleculares tridimensionais interativos e aprenda sobre sua geometria e ligações.">
@@ -28,6 +29,7 @@
                 <a href="leonardia.php">LeonardIA</a>
                 <a href="resultado.php">Meu Desempenho</a>
                 <a href="sobre.php">Sobre</a>
+                <a href="perfil.php">Perfil</a>
             </nav>
         </div>
     </header>

@@ -1755,6 +1755,26 @@ body.leonardia-page .main-nav a.active {
     line-height: 1.5;
 }
 
+.clear-history-button {
+    width: calc(100% - 16px);
+    min-height: 40px;
+    margin: 12px 8px 0;
+    border: 1px solid rgba(195, 70, 61, 0.22);
+    border-radius: 10px;
+    background: var(--leonardia-warning-bg);
+    color: var(--leonardia-warning-text);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.clear-history-button:hover {
+    border-color: rgba(195, 70, 61, 0.42);
+    transform: translateY(-1px);
+}
+
 .chat-sidebar-backdrop {
     display: none;
 }
@@ -1865,6 +1885,12 @@ body.leonardia-page .main-nav a.active {
     display: grid;
     width: 38px;
     padding: 0;
+}
+
+@media (min-width: 861px) {
+    body.leonardia-page .sidebar-toggle {
+        display: none;
+    }
 }
 
 .sidebar-toggle svg,
@@ -2753,6 +2779,164 @@ body.dark-mode #cronometro {
 /* 
    CONTEÚDO E QUESTÕES
    */
+.perfil-pagina {
+    max-width: 940px;
+}
+
+.perfil-painel {
+    max-width: 940px;
+    padding: 32px;
+}
+
+.perfil-painel:hover {
+    transform: none;
+}
+
+.perfil-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.perfil-avatar {
+    display: grid;
+    width: 82px;
+    height: 82px;
+    flex: 0 0 82px;
+    place-items: center;
+    border-radius: 24px;
+    color: #fff;
+    font-size: 1.55rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+    box-shadow: 0 12px 28px rgba(20, 184, 138, 0.24);
+}
+
+.perfil-cabecalho h2 {
+    margin: 6px 0 4px;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.perfil-cabecalho p {
+    margin: 0;
+    color: #64748b;
+    overflow-wrap: anywhere;
+}
+
+.perfil-secao-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 26px 0 14px;
+}
+
+.perfil-secao-titulo h3 {
+    margin: 0;
+}
+
+.perfil-secao-titulo a {
+    color: var(--primary-strong);
+    font-weight: 800;
+}
+
+.perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.perfil-card {
+    min-height: 106px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 20px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 18px;
+    background: rgba(248, 250, 252, 0.78);
+}
+
+.perfil-card span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.perfil-card strong {
+    font-size: 1.05rem;
+}
+
+.perfil-card-larga {
+    min-height: 96px;
+}
+
+.perfil-acoes {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.perfil-acoes form {
+    margin: 0;
+}
+
+body.dark-mode .perfil-cabecalho p,
+body.dark-mode .perfil-card span {
+    color: #a8b3c7;
+}
+
+body.dark-mode .perfil-card {
+    background: rgba(15, 23, 42, 0.58);
+    border-color: rgba(148, 163, 184, 0.14);
+}
+
+@media (max-width: 640px) {
+    .perfil-painel {
+        padding: 20px;
+        margin: 12px 10px;
+    }
+
+    .perfil-cabecalho {
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .perfil-avatar {
+        width: 64px;
+        height: 64px;
+        flex-basis: 64px;
+        border-radius: 18px;
+        font-size: 1.2rem;
+    }
+
+    .perfil-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-acoes {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .perfil-acoes .botao,
+    .perfil-acoes form,
+    .perfil-acoes form .botao {
+        width: 100%;
+        text-align: center;
+    }
+}
+
 .painel, .quadro {
     background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.68));
     backdrop-filter: blur(12px);
