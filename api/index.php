@@ -7,8 +7,8 @@ $requestPath = urldecode($requestPath);
 $requestPath = ltrim($requestPath, '/');
 
 if ($requestPath === '') {
-    // A entrada do domínio começa pelo diagnóstico; links internos para index.php não mudam.
-    header('Location: /formulario.php', true, 302);
+    // A entrada do domínio começa pelo login.
+    header('Location: /login.php', true, 302);
     exit;
 }
 
