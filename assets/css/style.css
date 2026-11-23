@@ -5537,6 +5537,11 @@ body.dark-mode.periodic-page .site-footer a {
     background: #e8eee1;
 }
 
+body:not(.dark-mode) .accessibility-panel #accessibility-theme,
+body:not(.dark-mode) .accessibility-panel #accessibility-theme:hover:not(:disabled) {
+    color: #193e2f !important;
+}
+
 .accessibility-panel button:focus-visible,
 .accessibility-trigger:focus-visible {
     outline: 3px solid #19734e;
@@ -5812,4 +5817,93 @@ body.dark-mode.high-contrast textarea {
         width: min(330px, calc(100vw - 24px));
         padding: 16px;
     }
+}
+
+/* Contraste definitivo dos controles do painel de acessibilidade.
+   Evita que regras globais de tema ou alto contraste as deixem invisíveis. */
+body.high-contrast .accessibility-panel {
+    border-color: #000 !important;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+body.high-contrast .accessibility-panel h2,
+body.high-contrast .accessibility-panel h3,
+body.high-contrast .accessibility-font-controls span,
+body.high-contrast .accessibility-note,
+body.high-contrast .accessibility-status {
+    color: #111 !important;
+}
+
+body.high-contrast .accessibility-panel button {
+    border-color: #111 !important;
+    background: #fff !important;
+    color: #111 !important;
+}
+
+body.high-contrast .accessibility-panel .accessibility-contrast {
+    border-color: #193e2f !important;
+    background: #193e2f !important;
+    color: #fff !important;
+}
+
+body.dark-mode.high-contrast .accessibility-panel {
+    border-color: #fff !important;
+    background: #101826 !important;
+    color: #fff !important;
+}
+
+body.dark-mode.high-contrast .accessibility-panel h2,
+body.dark-mode.high-contrast .accessibility-panel h3,
+body.dark-mode.high-contrast .accessibility-font-controls span,
+body.dark-mode.high-contrast .accessibility-note,
+body.dark-mode.high-contrast .accessibility-status {
+    color: #fff !important;
+}
+
+body.dark-mode.high-contrast .accessibility-panel button {
+    border-color: rgba(255, 255, 255, 0.55) !important;
+    background: #1b2939 !important;
+    color: #fff !important;
+}
+
+body.dark-mode.high-contrast .accessibility-panel .accessibility-contrast {
+    border-color: #6fe7c1 !important;
+    background: #6fe7c1 !important;
+    color: #102a2b !important;
+}
+
+/* Mantém o texto dos controles de tema legível também no estado hover. */
+body.dark-mode .accessibility-panel button,
+body.dark-mode .accessibility-panel button:hover:not(:disabled),
+body.dark-mode .accessibility-panel #accessibility-theme,
+body.dark-mode .accessibility-panel #accessibility-theme:hover:not(:disabled) {
+    color: #eaf3ff !important;
+}
+
+body.dark-mode .accessibility-panel #accessibility-theme:hover:not(:disabled) {
+    border-color: rgba(111, 231, 193, 0.5);
+    background: #223448;
+}
+
+body.dark-mode .accessibility-panel button:hover:not(:disabled):not(.accessibility-contrast),
+body.dark-mode .accessibility-panel button:focus-visible:not(:disabled):not(.accessibility-contrast),
+body.dark-mode .accessibility-panel button:active:not(:disabled):not(.accessibility-contrast) {
+    border-color: rgba(148, 163, 184, 0.5) !important;
+    background: #223448 !important;
+    color: #eaf3ff !important;
+}
+
+body.high-contrast .accessibility-panel button,
+body.high-contrast .accessibility-panel button:hover:not(:disabled),
+body.high-contrast .accessibility-panel #accessibility-theme,
+body.high-contrast .accessibility-panel #accessibility-theme:hover:not(:disabled) {
+    color: #111 !important;
+}
+
+body.dark-mode.high-contrast .accessibility-panel button,
+body.dark-mode.high-contrast .accessibility-panel button:hover:not(:disabled),
+body.dark-mode.high-contrast .accessibility-panel #accessibility-theme,
+body.dark-mode.high-contrast .accessibility-panel #accessibility-theme:hover:not(:disabled) {
+    color: #fff !important;
 }

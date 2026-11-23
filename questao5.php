@@ -17,6 +17,7 @@ Descrição: Questão 5 do simulado. Processa o formulário e atualiza a pontua�
 -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <!-- Metadados da pagina e CSS externo. -->
     
     <!-- Cabecalho padrao do questionario. -->

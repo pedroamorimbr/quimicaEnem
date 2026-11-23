@@ -17,6 +17,7 @@ Descrição: Última questão do simulado; ao finalizar redireciona para `result
 -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     
     <!-- Cabecalho padrao do questionario. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

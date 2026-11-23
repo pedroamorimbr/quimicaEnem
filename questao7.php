@@ -17,6 +17,7 @@ Descrição: Questão 7 do simulado — contém enunciado, alternativas, process
 -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <!-- Cabecalho padrao do questionario. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questao 7 - PlayCHEMISTRY ENEM</title>

@@ -17,6 +17,7 @@ Descrição: Questão 6 do simulado. Alternativas, validação e encaminhamento 
 -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     
     <!-- Cabecalho padrao do questionario. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

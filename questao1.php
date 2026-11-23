@@ -33,6 +33,7 @@ Contém: manipulação de pontuação, feedback e redirecionamento para `questao
 -->
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/png" href="/assets/images/brand/logo-playchemistry.png">
     <!-- Configuracoes basicas da pagina. -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
