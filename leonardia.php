@@ -262,7 +262,7 @@ function leonardia_call_openrouter(string $prompt, string $systemInstruction, st
             }
 
             if ($response['error'] !== '') {
-                $lastMessage = 'Falha ao conectar com o OpenRouter. Verifique a conexão e tente novamente.';
+                $lastMessage = 'A LeonardIA está temporariamente indisponível porque não conseguiu se conectar ao serviço de IA. Tente novamente em alguns instantes. Se o problema persistir, verifique a Conexão.';
             } elseif (isset($data['error']['message'])) {
                 $providerMessage = leonardia_safe_provider_error((string) $data['error']['message']);
                 if (stripos($providerMessage, 'key') !== false || stripos($providerMessage, 'authentication') !== false || $response['status'] === 401 || $response['status'] === 403) {
@@ -321,8 +321,12 @@ function leonardia_http_post_json_result(string $url, array $payload, array $hea
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers ?: ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     curl_setopt($ch, CURLOPT_TIMEOUT, 45);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    if (defined('CURL_IPRESOLVE') && defined('CURL_IPRESOLVE_V4')) {
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    }
 
     $response = curl_exec($ch);
     $error = $response === false ? curl_error($ch) : '';
