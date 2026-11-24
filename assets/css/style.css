@@ -5324,6 +5324,10 @@ body.dark-mode.periodic-page .site-footer a {
         background: #101826;
     }
 
+    body.dark-mode .menu-toggle {
+        color: var(--primary-strong);
+    }
+
     .main-nav.is-open {
         display: flex;
     }
